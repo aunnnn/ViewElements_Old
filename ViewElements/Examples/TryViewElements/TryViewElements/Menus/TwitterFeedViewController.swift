@@ -10,7 +10,7 @@ import ViewElements
 
 class TwitterFeedViewController: TableModelViewController {
     
-    override func setupTableViewModel() {
+    override func setupTable() {
         let section1 = Section(
             header: nil,
             footer: nil,
@@ -58,14 +58,14 @@ class TwitterFeedViewController: TableModelViewController {
         
         section2.rows.background(color: .white)
         section2.rows.childrenHaveSameBackgroundColorAsContainer()
-        self.tableViewModel = Table.init(sections: [section1, section2])
-        self.tableViewModel.guessesSimilarHeightForCellsWithSameType = true
-        self.tableViewModel.headerView = TableHeaderView(ElementOfLabel(props: "Note: Here you will notice that scrolling is not smooth. It seems that complex component is kind of expensive. Basically it's just nested UIStackViews. \n\nWith table header view it's even more slow (significantly) with reason I don't know yet.\n\nIf you have any tips on how to improve this, let me know. For now, avoid complex Component!").styles({ (lb) in
+        self.table = Table.init(sections: [section1, section2])
+        self.table.guessesSimilarHeightForCellsWithSameType = true
+        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Note: Here you will notice that scrolling is not smooth. It seems that complex component is kind of expensive. Basically it's just nested UIStackViews. \n\nWith table header view it's even more slow (significantly) with reason I don't know yet.\n\nIf you have any tips on how to improve this, let me know. For now, avoid complex Component!").styles({ (lb) in
             lb.font = UIFont.italicSystemFont(ofSize: 14)
             lb.textColor = .gray
         }))
-        self.tableViewModel.headerView?.layoutMarginsStyle = .inset(top: 12, left: 22, bottom: 12, right: 22)
-        self.tableViewModel.headerView?.backgroundColor = .lightText
+        self.table.headerView?.layoutMarginsStyle = .inset(top: 12, left: 22, bottom: 12, right: 22)
+        self.table.headerView?.backgroundColor = .lightText
         
         self.tableView.backgroundColor = .lightText
     }

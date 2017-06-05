@@ -9,7 +9,7 @@
 import ViewElements
 
 class TwitterFeedWithNibViewController: TableModelViewController {
-    override func setupTableViewModel() {
+    override func setupTable() {
         let section1 = TwitterFeedWithNibViewController.mockFeedSection()
         
         let hd = SectionHeader(ElementOfLabel(props: "In case you've missed it").styles({ (lb) in
@@ -31,14 +31,14 @@ class TwitterFeedWithNibViewController: TableModelViewController {
                 all.inset(left: 0, right: 0)
                 return [spc] + all
         }
-        self.tableViewModel = Table.init(sections: [section1, section2])
-        self.tableViewModel.guessesSimilarHeightForCellsWithSameType = true
-        self.tableViewModel.headerView = TableHeaderView(ElementOfLabel(props: "Twitter card created with Nib.\n\nYou will notice that scrolling is so smoother than using Component!").styles({ (lb) in
+        self.table = Table.init(sections: [section1, section2])
+        self.table.guessesSimilarHeightForCellsWithSameType = true
+        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Twitter card created with Nib.\n\nYou will notice that scrolling is so smoother than using Component!").styles({ (lb) in
             lb.font = UIFont.italicSystemFont(ofSize: 14)
             lb.textColor = .gray
         }))
-        self.tableViewModel.headerView?.layoutMarginsStyle = .inset(top: 12, left: 22, bottom: 12, right: 22)
-        self.tableViewModel.headerView?.backgroundColor = .lightText
+        self.table.headerView?.layoutMarginsStyle = .inset(top: 12, left: 22, bottom: 12, right: 22)
+        self.table.headerView?.backgroundColor = .lightText
         
         self.tableView.backgroundColor = .lightText
     }

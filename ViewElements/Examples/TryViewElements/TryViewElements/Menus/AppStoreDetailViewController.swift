@@ -9,12 +9,13 @@
 import ViewElements
 
 class AppStoreDetailViewController: TableModelViewController {
-    override func setupTableViewModel() {
+    override func setupTable() {
         let h: SectionHeader = {
             let s = ElementOfSegmentedControl(props: (["Details", "Reviews", "Related"], 0)).styles({ (s) in
                 s.tintColor = UIColor.gray
                 s.addTarget(self, action: #selector(self.valueChanged(sender:)), for: .valueChanged)
             })
+            
             let sh = SectionHeader(s)
             sh.layoutMarginsStyle = .each(vertical: 8, horizontal: 16)
             return sh
@@ -24,13 +25,13 @@ class AppStoreDetailViewController: TableModelViewController {
         lb.backgroundColor = MediumTheme.lightGray
         
         let s = Section(header: h, footer: nil, rows: TwitterFeedWithNibViewController.mockFeedSection().rows)
-        self.tableViewModel = Table(sections: [s])
+        self.table = Table(sections: [s])
         
         let appHeader = ElementOf<AppStoreHeaderDetailView>.init(props: (#imageLiteral(resourceName: "logo.png"), "Flying With Me - The last survival", "Wirawit Rueopas", "4+", "฿ 69.00"))
         let header = TableHeaderView(appHeader)
         header.layoutMarginsStyle = .zero
         header.backgroundColor = MediumTheme.lightGray
-        tableViewModel.headerView = header
+        table.headerView = header
     }
     
     func valueChanged(sender: UISegmentedControl) {
@@ -38,7 +39,7 @@ class AppStoreDetailViewController: TableModelViewController {
     }
     
     func showDetail(index: Int) {
-        let header = self.tableViewModel.sections[0].header!
+        let header = self.table.sections[0].header!
         
         let section: Section = {
             switch index {
@@ -63,7 +64,7 @@ class AppStoreDetailViewController: TableModelViewController {
             }
         }()
         
-        self.tableViewModel.sections[0] = section
+        self.table.sections[0] = section
         self.tableView.reloadData()
         self.tableView.layoutIfNeeded()
         self.tableView.scrollRectToVisible(.init(x: 0, y: 0, width: 1, height: 1), animated: false)

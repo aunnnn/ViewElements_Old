@@ -12,7 +12,7 @@ open class TableModelViewController: UIViewController {
     
     public let tableView: UITableView
     
-    public var tableViewModel = TableViewModel()
+    public var table = Table()
     
     fileprivate var displayedIndexPaths: Set<IndexPath> = []
     fileprivate var cellIDsToGuessedHeights: [String: CGFloat] = [:]
@@ -22,15 +22,15 @@ open class TableModelViewController: UIViewController {
     private var tableHeaderViewHeightConstraint: NSLayoutConstraint?
     
     public final func getRow(indexPath: IndexPath) -> Row {
-        return tableViewModel.sections[indexPath.section].rows[indexPath.row]
+        return table.sections[indexPath.section].rows[indexPath.row]
     }
     
     public final func getHeader(section: Int) -> SectionHeader? {
-        return tableViewModel.sections[section].header
+        return table.sections[section].header
     }
     
     public final func getFooter(section: Int) -> SectionFooter? {
-        return tableViewModel.sections[section].footer
+        return table.sections[section].footer
     }
     
     public init(style: UITableViewStyle = .plain) {
@@ -43,14 +43,14 @@ open class TableModelViewController: UIViewController {
         super.init(coder: aDecoder)
     }
  
-    open func setupTableViewModel() {
+    open func setupTable() {
     
     }
     
     open override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupTableViewModel()
+        self.setupTable()
         
         self.registerForKeyboardNotifications()
         
@@ -60,16 +60,16 @@ open class TableModelViewController: UIViewController {
             self.view.addSubview(tableView)
             tableView.frame = self.view.bounds
             tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            tableView.backgroundColor = .white
+            tableView.backgroundColor = .clear
             tableView.delegate = self
             tableView.dataSource = self
             tableView.allowsSelection = true
             
-            if tableViewModel.hidesTrailingEmptyRowSeparators {
+            if table.hidesTrailingEmptyRowSeparators {
                 tableView.tableFooterView = UIView(frame: .zero)
             }
             
-            if let header = tableViewModel.headerView {
+            if let header = table.headerView {
                 
                 let headerView = header.element.build()
                 let containerView = UIView()
@@ -91,12 +91,12 @@ open class TableModelViewController: UIViewController {
     // MARK: Centering Content
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if tableViewModel.centersContentIfPossible {
+        if table.centersContentIfPossible {
             self.centerTableView(with: self.view.bounds.size)
         }
         
         // update scroll indicator to use guessed heights
-        if tableViewModel.guessesSimilarHeightForCellsWithSameType {
+        if table.guessesSimilarHeightForCellsWithSameType {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
@@ -114,7 +114,7 @@ open class TableModelViewController: UIViewController {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if tableViewModel.centersContentIfPossible {
+        if table.centersContentIfPossible {
             self.centerTableView(with: self.view.bounds.size)
         }
         
@@ -130,13 +130,13 @@ open class TableModelViewController: UIViewController {
             let headerFrame = headerView.frame
             
             if height != headerFrame.size.height {
-                tableHeaderViewHeightConstraint = tableHeaderViewHeightConstraint ?? headerView.widthAnchor.constraint(equalToConstant: height)
+                tableHeaderViewHeightConstraint = tableHeaderViewHeightConstraint ?? headerView.heightAnchor.constraint(equalToConstant: height)
                 tableHeaderViewHeightConstraint?.constant = height
             }
         }
         
         // update scroll indicator to use guessed heights
-        if tableViewModel.guessesSimilarHeightForCellsWithSameType {
+        if table.guessesSimilarHeightForCellsWithSameType {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }
@@ -195,7 +195,7 @@ open class TableModelViewController: UIViewController {
     
         let contentInsets = UIEdgeInsets(top: tableView.contentInset.top, left: 0, bottom: intersection.height + 8, right: 0)
 
-        if tableViewModel.centersContentIfPossible {
+        if table.centersContentIfPossible {
             self.tableView.isScrollEnabled = true
         }
         
@@ -206,7 +206,7 @@ open class TableModelViewController: UIViewController {
     @objc private func keyboardWillHide(notification: Notification) {
         self.previousActiveResponder = nil
         
-        if tableViewModel.centersContentIfPossible {
+        if table.centersContentIfPossible {
             UIView.animate(withDuration: 0.2) {
                 self.centerTableView(with: self.view.bounds.size)
             }
@@ -260,11 +260,11 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
     // MARK: UITableViewDatasource
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        return tableViewModel.sections.count
+        return table.sections.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewModel.sections[section].rows.count
+        return table.sections[section].rows.count
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -299,7 +299,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = getRow(indexPath: indexPath)
         
-        guard tableViewModel.guessesSimilarHeightForCellsWithSameType else { return row.estimatedRowHeight }
+        guard table.guessesSimilarHeightForCellsWithSameType else { return row.estimatedRowHeight }
         
         // if already displayed, use estimatedRowHeight
         if  displayedIndexPaths.contains(indexPath) {
@@ -318,7 +318,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
         let row = getRow(indexPath: indexPath)
         let newEstimatedHeight = cell.bounds.height
         
-        if tableViewModel.updatesEstimatedRowHeights {            
+        if table.updatesEstimatedRowHeights {            
             guard newEstimatedHeight >= 1 else {
                 print("Warning: Found new estimated height < 1 (\(newEstimatedHeight)) for view \(row.element.viewIdentifier). This value will be ignored.")
                 return
@@ -326,7 +326,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
             row.estimatedRowHeight = newEstimatedHeight
         }
         
-        if tableViewModel.guessesSimilarHeightForCellsWithSameType {
+        if table.guessesSimilarHeightForCellsWithSameType {
             displayedIndexPaths.insert(indexPath)
             self.cellIDsToGuessedHeights[row.element.viewIdentifier] = newEstimatedHeight
         }
@@ -379,7 +379,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard tableViewModel.updatesEstimatedRowHeights else { return }
+        guard table.updatesEstimatedRowHeights else { return }
         guard let header = getHeader(section: section) else { return }
         let newEstimatedHeight = view.bounds.height
         header.estimatedSectionHeaderHeight = newEstimatedHeight
@@ -423,7 +423,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     open func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        guard tableViewModel.updatesEstimatedRowHeights else { return }
+        guard table.updatesEstimatedRowHeights else { return }
         guard let footer = getFooter(section: section) else { return }
         let newEstimatedHeight = view.bounds.height
         footer.estimatedSectionFooterHeight = newEstimatedHeight

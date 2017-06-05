@@ -12,7 +12,7 @@ class TailLoadingViewController: TableModelViewController {
     
     var isLoading = false
     
-    override func setupTableViewModel() {
+    override func setupTable() {
         
         let loadingSection = Section(header: nil, footer: nil, rows: [{
             let row = Row(ElementOfActivityIndicator())
@@ -25,14 +25,14 @@ class TailLoadingViewController: TableModelViewController {
             TwitterFeedWithNibViewController.mockFeedSection(),
             loadingSection
             ])
-        self.tableViewModel = table
+        self.table = table
     }
     
     override func tableModelViewControllerWillDisplay(row: Row, at indexPath: IndexPath) {
         if row.tag == "loading" && !isLoading {
             isLoading = true
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
-                self?.tableViewModel.sections[0].rows.append(contentsOf: TwitterFeedWithNibViewController.mockFeedSection().rows)
+                self?.table.sections[0].rows.append(contentsOf: TwitterFeedWithNibViewController.mockFeedSection().rows)
                 self?.tableView.reloadData()
                 self?.isLoading = false
             }

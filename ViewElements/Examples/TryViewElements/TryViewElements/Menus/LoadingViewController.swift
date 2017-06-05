@@ -10,14 +10,14 @@ import ViewElements
 
 class LoadingViewController: TableModelViewController {
     
-    override func setupTableViewModel() {
+    override func setupTable() {
         
         let table = Table { () -> [Row] in
             let ld = Row(ElementOfActivityIndicator())
             ld.rowHeight = 64
             return [ld]
         }
-        self.tableViewModel = table
+        self.table = table
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.didLoadContent()
@@ -46,7 +46,7 @@ class LoadingViewController: TableModelViewController {
         
         let section2 = TwitterFeedWithNibViewController.mockFeedSection()
         
-        self.tableViewModel = Table(sections: [section1, section2])
+        self.table = Table(sections: [section1, section2])
         
         let inds = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0)]
         let del = [IndexPath(item: 0, section: 0)]

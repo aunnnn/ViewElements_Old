@@ -20,11 +20,11 @@ struct MediumTheme  {
 
 class MediumFeedViewController: TableModelViewController {
     
-    override func setupTableViewModel() {
+    override func setupTable() {
         self.tableView.backgroundColor = MediumTheme.lightGray
         let table = Table(sections: [MediumFeedViewController.mockFeedSection()])
         table.guessesSimilarHeightForCellsWithSameType = true
-        self.tableViewModel = table
+        self.table = table
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

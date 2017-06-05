@@ -50,3 +50,17 @@ class AppStoreHeaderDetailView: BaseNibView, OptionalTypedPropsAccessible {
         appAgeLimitedLabel.text = props?.age
     }
 }
+
+extension OptionalTypedPropsAccessible where Self: UIView, Self: ElementDisplayable {
+    static func element(props: Self.PropsType) -> ElementOf<Self> {
+        return ElementOf<Self>.init(props: props)
+    }
+    
+    static func asRow(props: Self.PropsType) -> Row {
+        return Row(self.element(props: props))
+    }
+}
+
+func ElementOfAppStoreHeaderDetail(props: AppStoreHeaderDetailView.PropsType) -> ElementOf<AppStoreHeaderDetailView> {
+    return AppStoreHeaderDetailView.element(props: props)
+}

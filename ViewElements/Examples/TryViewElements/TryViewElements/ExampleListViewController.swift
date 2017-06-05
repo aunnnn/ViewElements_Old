@@ -28,7 +28,7 @@ class ExampleListViewController: TableModelViewController {
             row.rowHeight = 44
         }
         
-        self.tableViewModel = table
+        self.table = table
         
         super.viewDidLoad()
         
@@ -83,6 +83,7 @@ private enum Menu: Int {
         case .loading: return LoadingViewController()
         case .tapToLoadMore: return TapToLoadMoreViewController()
         case .tailLoading: return TailLoadingViewController()
+        case .twitterProfile: return TwitterProfileViewController()
         default: return nil
         }
     }

@@ -9,7 +9,7 @@
 import ViewElements
 
 class TapToLoadMoreViewController: TableModelViewController {
-    override func setupTableViewModel() {
+    override func setupTable() {
         
         let table = Table { () -> [Row] in
             let ld = Row(ElementOfLabel(props: "Hello world").styles({ (lb) in
@@ -28,7 +28,7 @@ class TapToLoadMoreViewController: TableModelViewController {
             load.rowHeight = 36
             return [ld, load]
         }
-        self.tableViewModel = table
+        self.table = table
     }
     
     func loadMore() {
@@ -43,13 +43,13 @@ class TapToLoadMoreViewController: TableModelViewController {
             loading.rowHeight = 36
             return [ld, loading]
         }
-        self.tableViewModel = table
+        self.table = table
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             self?.didLoadContent()
         }
         
-        self.tableViewModel = table
+        self.table = table
         self.tableView.reloadData()
     }
     
@@ -66,7 +66,7 @@ class TapToLoadMoreViewController: TableModelViewController {
         
         let table = Table(sections: [section])
         
-        self.tableViewModel = table
+        self.table = table
         
         self.tableView.beginUpdates()
         self.tableView.reloadSections([0], with: .automatic)

@@ -131,7 +131,7 @@ public final class TableHeaderView: ElementContainer {
 }
 
 /// Represents a table view.
-public final class TableViewModel {
+public final class Table {
     
     /// If true (default), each FormRow's estimatedRowHeight will be updated with actual value after displaying the cell.
     public var updatesEstimatedRowHeights = true
@@ -163,5 +163,3 @@ public final class TableViewModel {
         self.init(sections: [section])
     }
 }
-
-public typealias Table = TableViewModel

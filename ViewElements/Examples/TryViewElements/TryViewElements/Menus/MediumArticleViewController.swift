@@ -9,7 +9,7 @@
 import ViewElements
 
 class MediumArticleViewController: TableModelViewController {
-    override func setupTableViewModel() {
+    override func setupTable() {
         let f1 = SectionFooter(MediumArticleComponent.ActionPanel(props: (376, 5)))
         f1.backgroundColor = MediumTheme.lightGray
         f1.layoutMarginsStyle = .inset(top: 8, left: 12, bottom: 8, right: 12)
@@ -121,7 +121,7 @@ class MediumArticleViewController: TableModelViewController {
         
         // CREATE TABLE
         
-        let table = TableViewModel(sections: [s1, s2, s3])
+        let table = Table(sections: [s1, s2, s3])
         table.guessesSimilarHeightForCellsWithSameType = true
         table.headerView = TableHeaderView(ElementOfLabel(props: "Tips: You can set a table header view like here, although you never actually need it since you can use a Row instead.\n\nPS: I actually don't understand how a table header view works with autolayout yet. Prepare that it might break!").styles({ (lb) in
             lb.font = UIFont.italicSystemFont(ofSize: 14)
@@ -129,7 +129,7 @@ class MediumArticleViewController: TableModelViewController {
         }))
         table.headerView?.layoutMarginsStyle = .inset(top: 12, left: 22, bottom: 12, right: 22)
         table.headerView?.backgroundColor = .lightText
-        self.tableViewModel = table
+        self.table = table
     }
     
     override func viewDidLoad() {

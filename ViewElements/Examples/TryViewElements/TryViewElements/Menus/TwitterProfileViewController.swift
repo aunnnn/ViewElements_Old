@@ -20,14 +20,15 @@ class TwitterProfileViewController: TableModelViewController {
         self.title = nil
         self.view.backgroundColor = .white
         
-        /* Manually manage the tableView's content inset */
+        /* Manually manage the tableView's content inset, set it to 64 (status bar + nav height) */
         
         self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.contentInset = UIEdgeInsets(top: 64, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = .init(top: 64, left: 0, bottom: 0, right: 0)
+        self.tableView.contentOffset = .init(x: 0, y: -64)
         
-        do /* Make header image view */ {
+        do /* Make stretchy header image view, this will be above tableHeaderView */ {
             
-            let headerImageView = UIImageView(image: #imageLiteral(resourceName: "background.png"))
+            let headerImageView = UIImageView(image: #imageLiteral(resourceName: "twitterbg.jpeg"))
             self.headerImageView = headerImageView
             headerImageView.translatesAutoresizingMaskIntoConstraints = false
             headerImageView.clipsToBounds = true
@@ -41,20 +42,24 @@ class TwitterProfileViewController: TableModelViewController {
             blurEffectView.al_pinToEdges(ofView: headerImageView)
             blurEffectView.alpha = 0.1
             
-            do {
-                let nameLabel = UILabel()
-                nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
-                nameLabel.textAlignment = .center
-                nameLabel.textColor = .white
-                nameLabel.text = "Wirawit Rueopas"
+            do /* Nav titles stack view */ {
                 
-                let tweetCountLabel = UILabel()
-                tweetCountLabel.font = UIFont.systemFont(ofSize: 12)
-                tweetCountLabel.textAlignment = .center
-                tweetCountLabel.textColor = .white
-                tweetCountLabel.text = "25.2K Tweets"
+                let titlesView = UIStackView(arrangedSubviews: { () -> [UIView] in
+                    
+                    let nameLabel = UILabel()
+                    nameLabel.font = UIFont.boldSystemFont(ofSize: 18)
+                    nameLabel.textAlignment = .center
+                    nameLabel.textColor = .white
+                    nameLabel.text = "Wirawit Rueopas"
+                    
+                    let tweetCountLabel = UILabel()
+                    tweetCountLabel.font = UIFont.systemFont(ofSize: 12)
+                    tweetCountLabel.textAlignment = .center
+                    tweetCountLabel.textColor = .white
+                    tweetCountLabel.text = "25.2K Tweets"
+                    return [nameLabel, tweetCountLabel]
+                }())
                 
-                let titlesView = UIStackView(arrangedSubviews: [nameLabel, tweetCountLabel])
                 titlesView.distribution = .fill
                 titlesView.axis = .vertical
                 titlesView.alignment = .center
@@ -102,10 +107,10 @@ class TwitterProfileViewController: TableModelViewController {
     
     override func setupTable() {
         let sheader = SectionHeader(TwitterProfileMenuComponent(props: ["TWEETS", "TWEETS & REPLIES", "MEDIA", "LIKES"]))
-        let section1 = Section(header: sheader, footer: nil, rows: TwitterFeedWithNibViewController.mockFeedSection().rows)
+        let section1 = Section(header: sheader, footer: nil, rows: (0...3).flatMap{ _ in return TwitterFeedWithNibViewController.mockFeedSection().rows})
         let table = Table(sections: [section1])
         table.headerView = { () -> TableHeaderView in
-            let h = TableHeaderView(ElementOf<TwitterProfileHeaderView>.init(props: (#imageLiteral(resourceName: "logo.png"), "Wirawit Rueopas", "Hi, I'm developing ViewElements. It'll break for sure sometimes, but I know you'll help... Join me")))
+            let h = TableHeaderView(ElementOf<TwitterProfileHeaderView>.init(props: (#imageLiteral(resourceName: "logo.png"), "Wirawit Rueopas", "Hi, this header is just a TableHeaderView with AutoLayout. I haven't made the horizontal swipe between section though. This is a single table view. And I guess that is the hardest part.")))
             h.layoutMarginsStyle = .zero
             return h
         }()
@@ -131,11 +136,12 @@ class TwitterProfileViewController: TableModelViewController {
         /* Increase alpha of blur effect when we drag down */
         headerImageView.subviews.first?.alpha = min(abs(min(scrollView.contentOffset.y + 64, 0)), 60)/60
         
-        do {
+        do /* Move up titles in navigation bar */ {
+            
             let header = (self.tableView.tableHeaderView!.subviews.first as! TwitterProfileHeaderView)
             if let nameLabel = header.nameLabel {
                 
-                // Name label's origin Y relative to self.view
+                // Get name label's origin Y relative to self.view
                 let nameLabelOriginY = header.convert(nameLabel.frame.origin, to: self.view).y
                 
                 let topNavTitlesY = headerImageView.bounds.height - 44
@@ -147,6 +153,33 @@ class TwitterProfileViewController: TableModelViewController {
                 // Also increase alpha of blur effect when navTitles is going to show up.
                 if nameLabelOriginY < 64 {
                     headerImageView.subviews.first?.alpha = min(abs(min(nameLabelOriginY - 64, 0)), 44)/44
+                }
+            }
+        }
+        
+        do /* Adjust scroll indicator inset to appear under the first section */ {
+            
+            if let sectionFrameInTableView = self.tableView.headerView(forSection: 0)?.frame {
+                
+                let sectionFrameInView = self.view.convert(sectionFrameInTableView, from: self.tableView)
+                
+                // *Adjust insets only when it's not floating.
+                //
+                // WHY?
+                // ----
+                // Ideally, maxY should be some constant value when it's floating (stick at top).
+                // And the check 'isSectionHeaderFloating' should be unnecessary right?
+                //
+                // But from printing it out, it seems to fluctuate at lot! Especially scrolling fast.
+                // Though it eventually rests at some fixed value.
+                //
+                // I assume that the sectionFrameInTableView's value is not stable yet when scrollViewDidScroll is called.
+                // There might be more calculation in table view after this to make the section header really sticks.
+                //
+                // So we fixed it by setting the inset only when it's not floating.
+                //
+                if !self.isSectionHeaderFloating(section: 0) {
+                    self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: sectionFrameInView.maxY, left: 0, bottom: 0, right: 0)
                 }
             }
         }

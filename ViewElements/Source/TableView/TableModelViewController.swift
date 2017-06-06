@@ -19,7 +19,6 @@ open class TableModelViewController: UIViewController {
     
     private var previousTableViewContentInset: UIEdgeInsets?
     private weak var previousActiveResponder: UIResponder?
-    private var tableHeaderViewHeightConstraint: NSLayoutConstraint?
     
     public final func getRow(indexPath: IndexPath) -> Row {
         return table.sections[indexPath.section].rows[indexPath.row]
@@ -50,6 +49,8 @@ open class TableModelViewController: UIViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .white
+        
         self.setupTable()
         
         self.registerForKeyboardNotifications()
@@ -79,7 +80,13 @@ open class TableModelViewController: UIViewController {
                 header.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: containerView, elementView: headerView)
                 headerView.al_pinToLayoutMarginsGuide(ofView: containerView)
                 header.configure(containerView: containerView)
+                
                 self.tableView.tableHeaderView = containerView
+                
+                // ** Must setup AutoLayout after set tableHeaderView.
+                containerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+                containerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+                containerView.topAnchor.constraint(equalTo: self.tableView.topAnchor).isActive = true
             }
         }
     }
@@ -114,29 +121,27 @@ open class TableModelViewController: UIViewController {
     
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
+        // keep tract to update once
+        var shouldUpdateTableHeight = false
+        
+        if let headerView = tableView.tableHeaderView {
+            let previousHeight = headerView.bounds.height
+            headerView.layoutIfNeeded()
+            let newHeight = headerView.bounds.height
+            
+            // update table header view's height
+            shouldUpdateTableHeight = previousHeight != newHeight || shouldUpdateTableHeight
+        }
+        
         if table.centersContentIfPossible {
             self.centerTableView(with: self.view.bounds.size)
         }
-        
-        if let headerView = tableView.tableHeaderView {
-            headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-            headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-            headerView.topAnchor.constraint(equalTo: self.tableView.topAnchor).isActive = true
-            
-            headerView.setNeedsLayout()
-            headerView.layoutIfNeeded()
-            
-            let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
-            let headerFrame = headerView.frame
-            
-            if height != headerFrame.size.height {
-                tableHeaderViewHeightConstraint = tableHeaderViewHeightConstraint ?? headerView.heightAnchor.constraint(equalToConstant: height)
-                tableHeaderViewHeightConstraint?.constant = height
-            }
-        }
-        
+
         // update scroll indicator to use guessed heights
-        if table.guessesSimilarHeightForCellsWithSameType {
+        shouldUpdateTableHeight = table.guessesSimilarHeightForCellsWithSameType || shouldUpdateTableHeight
+        
+        if shouldUpdateTableHeight {
             self.tableView.beginUpdates()
             self.tableView.endUpdates()
         }

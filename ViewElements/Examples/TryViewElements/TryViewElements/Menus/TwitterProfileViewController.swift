@@ -137,7 +137,7 @@ class TwitterProfileViewController: TableModelViewController {
         }
         
         /* Increase alpha of blur effect when we drag down */
-        headerImageView.subviews.first?.alpha = min(abs(min(scrollView.contentOffset.y + 64, 0)), 60)/60
+        headerImageView.subviews.first?.alpha = min(abs(min(scrollView.contentOffset.y + 64, 0)), 140)/140
         
         do /* Move up titles in navigation bar */ {
             

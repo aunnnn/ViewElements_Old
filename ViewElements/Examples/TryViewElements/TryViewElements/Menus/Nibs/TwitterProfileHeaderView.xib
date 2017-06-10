@@ -19,7 +19,7 @@
             <subviews>
                 <view contentMode="scaleToFill" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="XAK-hZ-aKt">
                     <rect key="frame" x="0.0" y="44" width="362" height="257"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.99215686270000003" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="999" verticalCompressionResistancePriority="999" text="Marie Josee Lamothe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Idj-2j-1QJ">
                     <rect key="frame" x="16" y="94" width="185" height="21.5"/>
@@ -81,7 +81,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tOH-lo-FpB">
-                    <rect key="frame" x="194" y="56" width="152" height="30"/>
+                    <rect key="frame" x="194" y="52" width="152" height="30"/>
                     <subviews>
                         <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqF-wf-dP9">
                             <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
@@ -150,7 +150,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="W53-Dt-eAV">
-                    <rect key="frame" x="24" y="22" width="65" height="64"/>
+                    <rect key="frame" x="16" y="23" width="64" height="63"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="W53-Dt-eAV" secondAttribute="height" multiplier="1:1" constant="1" id="nNW-mj-TZg"/>
                     </constraints>
@@ -164,12 +164,11 @@
                 <constraint firstItem="XAK-hZ-aKt" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="44" id="7wZ-94-quE"/>
                 <constraint firstItem="dqP-6A-h12" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="9kX-Hg-7S3"/>
                 <constraint firstItem="n9z-IF-TQH" firstAttribute="centerY" secondItem="hly-Ha-VLY" secondAttribute="centerY" id="GBP-6y-q8z"/>
-                <constraint firstItem="W53-Dt-eAV" firstAttribute="top" secondItem="XAK-hZ-aKt" secondAttribute="top" priority="998" constant="-22" id="GuC-Yd-rd1"/>
-                <constraint firstItem="W53-Dt-eAV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="leading" constant="56" id="I4i-4c-5Tc"/>
+                <constraint firstItem="W53-Dt-eAV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="leading" constant="48" id="I4i-4c-5Tc"/>
                 <constraint firstAttribute="trailing" secondItem="T21-S8-AwO" secondAttribute="trailing" constant="16" id="LhQ-ex-zkg"/>
                 <constraint firstItem="XAK-hZ-aKt" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="N8y-oA-W2o"/>
                 <constraint firstItem="W53-Dt-eAV" firstAttribute="top" relation="lessThanOrEqual" secondItem="XAK-hZ-aKt" secondAttribute="top" id="P92-1t-jkj"/>
-                <constraint firstItem="XAK-hZ-aKt" firstAttribute="top" secondItem="tOH-lo-FpB" secondAttribute="top" constant="-12" id="RqH-rj-Bf0"/>
+                <constraint firstItem="XAK-hZ-aKt" firstAttribute="top" secondItem="tOH-lo-FpB" secondAttribute="top" constant="-8" id="RqH-rj-Bf0"/>
                 <constraint firstItem="tOH-lo-FpB" firstAttribute="trailing" secondItem="XAK-hZ-aKt" secondAttribute="trailing" constant="-16" id="WCV-Fe-tz3"/>
                 <constraint firstAttribute="bottom" secondItem="hly-Ha-VLY" secondAttribute="bottom" priority="999" constant="8" id="byX-ug-9qm"/>
                 <constraint firstItem="n9z-IF-TQH" firstAttribute="leading" secondItem="hly-Ha-VLY" secondAttribute="trailing" constant="16" id="gNN-9F-Fuh"/>
@@ -177,12 +176,17 @@
                 <constraint firstItem="Idj-2j-1QJ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="kGh-RO-NLl"/>
                 <constraint firstAttribute="bottom" secondItem="XAK-hZ-aKt" secondAttribute="bottom" id="kVo-ZX-5mn"/>
                 <constraint firstItem="Idj-2j-1QJ" firstAttribute="top" secondItem="W53-Dt-eAV" secondAttribute="bottom" constant="8" id="kvP-hN-9Ak"/>
-                <constraint firstItem="Idj-2j-1QJ" firstAttribute="top" secondItem="tOH-lo-FpB" secondAttribute="bottom" constant="8" id="w92-gZ-XLH"/>
-                <constraint firstItem="W53-Dt-eAV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="998" constant="16" id="yhq-Bw-Smf"/>
+                <constraint firstItem="Idj-2j-1QJ" firstAttribute="top" secondItem="tOH-lo-FpB" secondAttribute="bottom" constant="12" id="w92-gZ-XLH"/>
+                <constraint firstItem="W53-Dt-eAV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" priority="999" constant="16" id="yhq-Bw-Smf"/>
                 <constraint firstItem="T21-S8-AwO" firstAttribute="top" secondItem="dqP-6A-h12" secondAttribute="bottom" constant="8" id="zOO-or-zhQ"/>
                 <constraint firstItem="dqP-6A-h12" firstAttribute="top" secondItem="Idj-2j-1QJ" secondAttribute="bottom" constant="9" id="zYz-6D-Xi9"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                    <real key="value" value="0.0"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="descriptionLabel" destination="T21-S8-AwO" id="zhT-3N-4M7"/>
                 <outlet property="imageView" destination="W53-Dt-eAV" id="DCH-Qi-qce"/>

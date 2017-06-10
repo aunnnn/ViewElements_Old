@@ -107,6 +107,9 @@ class TwitterProfileViewController: TableModelViewController {
     
     override func setupTable() {
         let sheader = SectionHeader(TwitterProfileMenuComponent(props: ["TWEETS", "TWEETS & REPLIES", "MEDIA", "LIKES"]))
+        sheader.backgroundColor = .white
+        sheader.childrenHaveSameBackgroundColorAsContainer = true
+        
         let section1 = Section(header: sheader, footer: nil, rows: (0...3).flatMap{ _ in return TwitterFeedWithNibViewController.mockFeedSection().rows})
         let table = Table(sections: [section1])
         table.headerView = { () -> TableHeaderView in
@@ -220,16 +223,22 @@ class TwitterProfileMenuComponent: ComponentOf<[String]> {
     }
     
     override func render() -> StackProps {
-        let els = self.props.map { (s) -> ElementOf<Label> in
-            return ElementOfLabel(props: s).styles({ (lb) in
-                lb.font = UIFont.systemFont(ofSize: 12)
+        let els: [ViewBuildable] = self.props.map { (s) -> ViewBuildable in
+            ElementOfButton(props: s).styles({ (bttn) in
+                bttn.colorText(.darkGray)
+                bttn.colorHighlightedText(.lightGray)
+                bttn.withFont(.boldSystemFont(ofSize: 13))
             })
         }
         
+        let im = ElementOfImageView(props: #imageLiteral(resourceName: "logo.png")).styles { (imv) in
+            imv.al_fixedSize(width: 44, height: 44)
+        }
+        
         return HorizontalStack(
-            distribute: .fill,
+            distribute: .equalSpacing,
             align: .center,
-            spacing: 4,
-            els)
+            spacing: 20,
+            els + [im]).scrollable(true)
     }
 }

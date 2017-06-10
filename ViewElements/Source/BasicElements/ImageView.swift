@@ -25,6 +25,7 @@ open class ImageView: BaseImageView, OptionalTypedPropsAccessible {
     open override func setup() {
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
+        self.isUserInteractionEnabled = false
     }
     
     open override func update() {

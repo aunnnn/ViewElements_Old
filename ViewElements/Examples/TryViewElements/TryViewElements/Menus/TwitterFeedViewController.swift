@@ -119,7 +119,7 @@ fileprivate class PostContentComponent: ComponentOf<TwitterPost> {
             elContent,
             elImage,
             ActionsPanelComponent(props: ()),
-            ])
+            ]).fillsHorizontally(true)
     }
 }
 

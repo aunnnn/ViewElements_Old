@@ -142,9 +142,6 @@ public class StackProps: ViewBuildable {
     public var axis: UILayoutConstraintAxis = .horizontal
     public var spacing: CGFloat = 0
     
-    /// If this is a vertical stack, this value tells whether subviews also fill horizontal axis.
-    public var verticalStackAlsoFillsHorizontalAxis = true
-    
     private(set) internal lazy var elements: [ElementOfView] = {
         return self.elementsBlock().map({ (buildable) -> ElementOfView in
             switch buildable {
@@ -172,16 +169,8 @@ public class StackProps: ViewBuildable {
         stackView.distribution = self.distribution
         stackView.alignment = self.alignment
         stackView.spacing = self.spacing
-        
-//        if self.axis == .vertical && verticalStackAlsoFillsHorizontalAxis {
-//            subviews.forEach({ (sv) in
-//                sv.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
-//                sv.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
-//            })
-//        }
-        
+
         return stackView
-        
 //        let root = WrapperStackView()
 //        root.setup()
 //        root.addSubview(stackView)
@@ -195,11 +184,32 @@ public class StackProps: ViewBuildable {
 }
 
 public final class VerticalStack: StackProps {
+    
+    /// Whether each of subviews is stretched to fill horizontal axis.
+    public var fillsHorizontally = false
+    
     public init(distribute: UIStackViewDistribution, align: UIStackViewAlignment, spacing: CGFloat, _ elements: @escaping @autoclosure () -> [ViewBuildable]) {
         super.init(.vertical, elements)
         self.distribution = distribute
         self.alignment = align
         self.spacing = spacing
+    }
+    
+    public func fillsHorizontally(_ value: Bool) -> VerticalStack {
+        self.fillsHorizontally = value
+        return self
+    }
+    
+    public override func build() -> UIView {
+        let stackView = super.build()
+        let subviews = stackView.subviews
+        if self.axis == .vertical && self.fillsHorizontally {
+            subviews.forEach({ (sv) in
+                sv.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                sv.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+            })
+        }
+        return stackView
     }
 }
 

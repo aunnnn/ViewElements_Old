@@ -60,7 +60,7 @@ class TwitterFeedViewController: TableModelViewController {
         section2.rows.childrenHaveSameBackgroundColorAsContainer()
         self.table = Table.init(sections: [section1, section2])
         self.table.guessesSimilarHeightForCellsWithSameType = true
-        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Note: Here you will notice that scrolling is not smooth. It seems that complex component is kind of expensive. Basically it's just nested UIStackViews. \n\nWith table header view it's even more slow (significantly) with reason I don't know yet.\n\nIf you have any tips on how to improve this, let me know. For now, avoid complex Component!").styles({ (lb) in
+        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Twitter card created with Component.\n\nEach card here is created entirely from Component (nesting stack views together). It might be slower than using nib.").styles({ (lb) in
             lb.font = UIFont.italicSystemFont(ofSize: 14)
             lb.textColor = .gray
         }))

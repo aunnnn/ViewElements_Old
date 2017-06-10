@@ -33,7 +33,7 @@ class TwitterFeedWithNibViewController: TableModelViewController {
         }
         self.table = Table.init(sections: [section1, section2])
         self.table.guessesSimilarHeightForCellsWithSameType = true
-        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Twitter card created with Nib.\n\nYou will notice that scrolling is so smoother than using Component!").styles({ (lb) in
+        self.table.headerView = TableHeaderView(ElementOfLabel(props: "Twitter card created with Nib.\n\nYou will notice that scrolling is smoother than using Component.").styles({ (lb) in
             lb.font = UIFont.italicSystemFont(ofSize: 14)
             lb.textColor = .gray
         }))

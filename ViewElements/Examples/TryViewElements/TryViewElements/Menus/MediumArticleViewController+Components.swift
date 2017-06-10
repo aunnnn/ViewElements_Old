@@ -82,7 +82,7 @@ enum MediumArticleComponent {
                 bttn.setTitleColor(MediumTheme.green.withAlphaComponent(0.6), for: .highlighted)
                 bttn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
                 bttn.cornerRadius(4).border(width: 1, color: MediumTheme.green)
-                bttn.al_fixedWidth(width: 100)
+                bttn.al_fixedWidth(width: 88)
             }
             return
                 HorizontalStack(

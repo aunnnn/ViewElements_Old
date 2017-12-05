@@ -99,13 +99,13 @@ public final class Section {
     public var footer: SectionFooter?
     public var rows: [Row]
     
-    public init(header: SectionHeader?, footer: SectionFooter?, rows: [Row]) {
+    public init(header: SectionHeader?=nil, footer: SectionFooter?=nil, rows: [Row]) {
         self.header = header
         self.footer = footer
         self.rows = rows
     }
     
-    public init(header: SectionHeader?, footer: SectionFooter?, rowsBlock: () -> [Row]) {
+    public init(header: SectionHeader?=nil, footer: SectionFooter?=nil, rowsBlock: () -> [Row]) {
         self.header = header
         self.footer = footer
         self.rows = rowsBlock()

@@ -61,7 +61,7 @@ public protocol UnTypedPropsShouldElementUpdate {
 }
 
 /// Whether the Element (and UIView) associated with this component should update with received new Props.
-public protocol TypedPropsShouldElementUpdate: UnTypedPropsShouldElementUpdate, TypedPropsAccessible {
+public protocol TypedPropsShouldElementUpdate: TypedPropsAccessible {
     associatedtype PropsType: Props
     func shouldElementUpdate(oldProps: PropsType, newProps: PropsType) -> Bool
 }

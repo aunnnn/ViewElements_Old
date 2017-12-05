@@ -35,6 +35,30 @@ open class Button: BaseButton, OptionalTypedPropsAccessible {
     }
 }
 
+public typealias ButtonWithActionProps = (title: String, handler: () -> Void)
+
+open class ButtonWithAction: BaseButton, OptionalTypedPropsAccessible {
+    public typealias PropsType = ButtonWithActionProps
+    
+    open override func setup() {
+        self.setTitleColor(.darkGray, for: .normal)
+        self.setTitleColor(.gray, for: .highlighted)
+    }
+    
+    @objc private func handleAction() {
+        self.props?.handler()
+    }
+    
+    open override func update() {
+        self.setTitle(self.props?.title, for: .normal)
+        self.addTarget(self, action: #selector(self.handleAction), for: .touchUpInside)
+    }
+}
+
 public func ElementOfButton(props: ButtonProps) -> ElementOf<Button> {
     return ElementOf<Button>.init(props: props)
+}
+
+public func ElementOfButtonWithAction(props: ButtonWithActionProps) -> ElementOf<ButtonWithAction> {
+    return ElementOf<ButtonWithAction>.init(props: props)
 }

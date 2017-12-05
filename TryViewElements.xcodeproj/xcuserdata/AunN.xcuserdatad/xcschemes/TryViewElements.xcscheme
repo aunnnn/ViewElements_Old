@@ -17,7 +17,7 @@
                BlueprintIdentifier = "3099BECA1ED41AD800844AF7"
                BuildableName = "ViewElements.framework"
                BlueprintName = "ViewElements"
-               ReferencedContainer = "container:../../../ViewElements.xcodeproj">
+               ReferencedContainer = "container:ViewElements.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry

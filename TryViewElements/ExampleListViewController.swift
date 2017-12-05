@@ -45,27 +45,27 @@ class ExampleListViewController: TableModelViewController {
 }
 
 private enum Menu: Int {
-    case twitterComponent = 0
+    
+    case centeredContent = 0
+    case twitterComponent
     case twitterNib
     case twitterProfile
     
     case medium
-    case reddit
     case appStore
     
-    // TODO
     case loading
     case tapToLoadMore
     case tailLoading
     
     var name: String {
         switch self {
+        case .centeredContent: return "Centered Content"
         case .twitterComponent: return "Twitter (Component)"
         case .twitterNib: return "Twitter (Nib)"
         case .twitterProfile: return "Twitter Profile"
             
         case .medium: return "Medium"
-        case .reddit: return "Reddit"
         case .appStore: return "App Store"
             
         case .loading: return "Loading"
@@ -76,6 +76,7 @@ private enum Menu: Int {
     
     var vc: UIViewController? {
         switch self {
+        case .centeredContent: return CenteredContentViewController()
         case .twitterComponent: return TwitterFeedViewController()
         case .twitterNib: return TwitterFeedWithNibViewController()
         case .medium: return MediumFeedViewController()
@@ -84,7 +85,6 @@ private enum Menu: Int {
         case .tapToLoadMore: return TapToLoadMoreViewController()
         case .tailLoading: return TailLoadingViewController()
         case .twitterProfile: return TwitterProfileViewController()
-        default: return nil
         }
     }
 }

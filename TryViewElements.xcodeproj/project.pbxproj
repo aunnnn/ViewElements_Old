@@ -7,17 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3033FFFF1FD07B740067AE2A /* CenteredContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */; };
 		3044A5E51EE5AD3000A69F4B /* TwitterProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */; };
 		3044A5E71EE5B62800A69F4B /* TwitterProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */; };
 		3044A5E91EE5BB5000A69F4B /* TwitterProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044A5E81EE5BB5000A69F4B /* TwitterProfileHeaderView.swift */; };
 		3044A8A01EE6A25900FB5D50 /* twitterbg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3044A89F1EE6A25900FB5D50 /* twitterbg.jpeg */; };
+		308E10201FD09B2D00D720CF /* ViewElements.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308E101F1FD09B2D00D720CF /* ViewElements.framework */; };
+		308E10211FD09B2D00D720CF /* ViewElements.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 308E101F1FD09B2D00D720CF /* ViewElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3099BEE81ED434ED00844AF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099BEE71ED434ED00844AF7 /* AppDelegate.swift */; };
 		3099BEEA1ED434ED00844AF7 /* ExampleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099BEE91ED434ED00844AF7 /* ExampleListViewController.swift */; };
 		3099BEED1ED434ED00844AF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099BEEB1ED434ED00844AF7 /* Main.storyboard */; };
 		3099BEEF1ED434ED00844AF7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3099BEEE1ED434ED00844AF7 /* Assets.xcassets */; };
 		3099BEF21ED434ED00844AF7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099BEF01ED434ED00844AF7 /* LaunchScreen.storyboard */; };
-		30B63EF31EE1624800038C8B /* ViewElements.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B63EF21EE1623B00038C8B /* ViewElements.framework */; };
-		30B63EF41EE1624800038C8B /* ViewElements.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 30B63EF21EE1623B00038C8B /* ViewElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		30B63F0B1EE1628900038C8B /* AppStoreDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B63EF91EE1628900038C8B /* AppStoreDetailViewController.swift */; };
 		30B63F0C1EE1628900038C8B /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B63EFA1EE1628900038C8B /* LoadingViewController.swift */; };
 		30B63F0D1EE1628900038C8B /* MediumArticleViewController+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B63EFB1EE1628900038C8B /* MediumArticleViewController+Components.swift */; };
@@ -44,23 +45,6 @@
 		30CC70471EDF1FF700F01BE3 /* user3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30CC70401EDF1FF700F01BE3 /* user3.jpg */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		30B63EF11EE1623B00038C8B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 30B63EED1EE1623B00038C8B /* ViewElements.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3099BECB1ED41AD800844AF7;
-			remoteInfo = ViewElements;
-		};
-		30B63EF51EE1624800038C8B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 30B63EED1EE1623B00038C8B /* ViewElements.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 3099BECA1ED41AD800844AF7;
-			remoteInfo = ViewElements;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		3092383C1ED61AF4005509B6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -68,7 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				30B63EF41EE1624800038C8B /* ViewElements.framework in Embed Frameworks */,
+				308E10211FD09B2D00D720CF /* ViewElements.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,10 +60,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredContentViewController.swift; sourceTree = "<group>"; };
 		3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TwitterProfileViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterProfileHeaderView.xib; sourceTree = "<group>"; };
 		3044A5E81EE5BB5000A69F4B /* TwitterProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterProfileHeaderView.swift; sourceTree = "<group>"; };
 		3044A89F1EE6A25900FB5D50 /* twitterbg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitterbg.jpeg; sourceTree = "<group>"; };
+		308E101F1FD09B2D00D720CF /* ViewElements.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewElements.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3099BEE41ED434ED00844AF7 /* TryViewElements.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TryViewElements.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3099BEE71ED434ED00844AF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3099BEE91ED434ED00844AF7 /* ExampleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleListViewController.swift; sourceTree = "<group>"; };
@@ -87,7 +73,6 @@
 		3099BEEE1ED434ED00844AF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3099BEF11ED434ED00844AF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3099BEF31ED434ED00844AF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		30B63EED1EE1623B00038C8B /* ViewElements.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ViewElements.xcodeproj; path = ../../../ViewElements.xcodeproj; sourceTree = "<group>"; };
 		30B63EF91EE1628900038C8B /* AppStoreDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AppStoreDetailViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30B63EFA1EE1628900038C8B /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = LoadingViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		30B63EFB1EE1628900038C8B /* MediumArticleViewController+Components.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediumArticleViewController+Components.swift"; sourceTree = "<group>"; };
@@ -119,7 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				30B63EF31EE1624800038C8B /* ViewElements.framework in Frameworks */,
+				308E10201FD09B2D00D720CF /* ViewElements.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,7 +114,7 @@
 		3099BEDB1ED434ED00844AF7 = {
 			isa = PBXGroup;
 			children = (
-				30B63EED1EE1623B00038C8B /* ViewElements.xcodeproj */,
+				308E101F1FD09B2D00D720CF /* ViewElements.framework */,
 				3099BEE61ED434ED00844AF7 /* TryViewElements */,
 				3099BEE51ED434ED00844AF7 /* Products */,
 			);
@@ -158,14 +143,6 @@
 			path = TryViewElements;
 			sourceTree = "<group>";
 		};
-		30B63EEE1EE1623B00038C8B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				30B63EF21EE1623B00038C8B /* ViewElements.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		30B63EF81EE1628900038C8B /* Menus */ = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +159,7 @@
 				3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */,
 				30B63F091EE1628900038C8B /* TwitterPost.swift */,
 				30B63F0A1EE1628900038C8B /* Utilities.swift */,
+				3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */,
 			);
 			path = Menus;
 			sourceTree = "<group>";
@@ -231,7 +209,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				30B63EF61EE1624800038C8B /* PBXTargetDependency */,
 			);
 			name = TryViewElements;
 			productName = TryViewElements;
@@ -266,28 +243,12 @@
 			mainGroup = 3099BEDB1ED434ED00844AF7;
 			productRefGroup = 3099BEE51ED434ED00844AF7 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 30B63EEE1EE1623B00038C8B /* Products */;
-					ProjectRef = 30B63EED1EE1623B00038C8B /* ViewElements.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				3099BEE31ED434ED00844AF7 /* TryViewElements */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		30B63EF21EE1623B00038C8B /* ViewElements.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ViewElements.framework;
-			remoteRef = 30B63EF11EE1623B00038C8B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3099BEE21ED434ED00844AF7 /* Resources */ = {
@@ -329,6 +290,7 @@
 				3099BEE81ED434ED00844AF7 /* AppDelegate.swift in Sources */,
 				30B63F1B1EE1628900038C8B /* Utilities.swift in Sources */,
 				30B63F1A1EE1628900038C8B /* TwitterPost.swift in Sources */,
+				3033FFFF1FD07B740067AE2A /* CenteredContentViewController.swift in Sources */,
 				30B63F181EE1628900038C8B /* TwitterFeedViewController.swift in Sources */,
 				30B63F171EE1628900038C8B /* TapToLoadMoreViewController.swift in Sources */,
 				30B63F161EE1628900038C8B /* TailLoadingViewController.swift in Sources */,
@@ -341,14 +303,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		30B63EF61EE1624800038C8B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ViewElements;
-			targetProxy = 30B63EF51EE1624800038C8B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		3099BEEB1ED434ED00844AF7 /* Main.storyboard */ = {

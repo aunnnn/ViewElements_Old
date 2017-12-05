@@ -12,8 +12,6 @@
 		3044A5E71EE5B62800A69F4B /* TwitterProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */; };
 		3044A5E91EE5BB5000A69F4B /* TwitterProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044A5E81EE5BB5000A69F4B /* TwitterProfileHeaderView.swift */; };
 		3044A8A01EE6A25900FB5D50 /* twitterbg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 3044A89F1EE6A25900FB5D50 /* twitterbg.jpeg */; };
-		308E10201FD09B2D00D720CF /* ViewElements.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 308E101F1FD09B2D00D720CF /* ViewElements.framework */; };
-		308E10211FD09B2D00D720CF /* ViewElements.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 308E101F1FD09B2D00D720CF /* ViewElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3099BEE81ED434ED00844AF7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099BEE71ED434ED00844AF7 /* AppDelegate.swift */; };
 		3099BEEA1ED434ED00844AF7 /* ExampleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3099BEE91ED434ED00844AF7 /* ExampleListViewController.swift */; };
 		3099BEED1ED434ED00844AF7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3099BEEB1ED434ED00844AF7 /* Main.storyboard */; };
@@ -52,7 +50,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				308E10211FD09B2D00D720CF /* ViewElements.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +62,6 @@
 		3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterProfileHeaderView.xib; sourceTree = "<group>"; };
 		3044A5E81EE5BB5000A69F4B /* TwitterProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterProfileHeaderView.swift; sourceTree = "<group>"; };
 		3044A89F1EE6A25900FB5D50 /* twitterbg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = twitterbg.jpeg; sourceTree = "<group>"; };
-		308E101F1FD09B2D00D720CF /* ViewElements.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewElements.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3099BEE41ED434ED00844AF7 /* TryViewElements.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TryViewElements.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3099BEE71ED434ED00844AF7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3099BEE91ED434ED00844AF7 /* ExampleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleListViewController.swift; sourceTree = "<group>"; };
@@ -104,7 +100,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				308E10201FD09B2D00D720CF /* ViewElements.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +109,6 @@
 		3099BEDB1ED434ED00844AF7 = {
 			isa = PBXGroup;
 			children = (
-				308E101F1FD09B2D00D720CF /* ViewElements.framework */,
 				3099BEE61ED434ED00844AF7 /* TryViewElements */,
 				3099BEE51ED434ED00844AF7 /* Products */,
 			);

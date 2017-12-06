@@ -3,34 +3,35 @@
 import PlaygroundSupport
 import ViewElements
 
-//ViewElements.debugMode = true
-
 class CenteredContentViewController: TableModelViewController {
     
     var labelsCount = 0
     
     override func setupTable() {
         
+        self.debugMode = true
         let header = Row(ElementOfLabel(props: "Hello Oozou").styles({ (lb) in
             lb.font = UIFont.systemFont(ofSize: 40)
             lb.textAlignment = .center
         }))
         
-        let msg1 = Row(ElementOfLabel(props: "This is just a simple demo. Below is a space of 22 pts:").styles({ (lb) in
+        let msg1 = Row(ElementOfLabel(props: "This is just a simple demo. \n\nMultilines and autolayout are handled automatically.\nA row of empty space (below, in blue) can be used to style the layout.").styles({ (lb) in
             lb.textAlignment = .center
         }))
+        msg1.backgroundColor = .yellow
         
-                let spc20 = RowOfEmptySpace(height: 22)
-                spc20.backgroundColor = .gray
-                spc20.tag = "space"
+        let spc20 = RowOfEmptySpace(height: 40)
+        spc20.backgroundColor = .blue
+        spc20.tag = "space"
+
+        let msg2 = Row(ElementOfLabel(props: "Button and tap action are also supported."))
+        let bttn1 = Row(ElementOfButtonWithAction(props: (title: "Press to add label", handler: { [unowned self] in
+            self.buttonPressed()
+        })).styles({ (bttn) in
+            bttn.backgroundColor = .lightGray
+        }))
         
-                let bttn1 = Row(ElementOfButtonWithAction(props: (title: "Press me!", handler: { [unowned self] in
-                    self.buttonPressed()
-                })).styles({ (bttn) in
-                    bttn.backgroundColor = .lightGray
-                }))
-        
-        let rows = [header, msg1, spc20, bttn1]
+        let rows = [header, msg1, spc20, msg2, bttn1]
         
         let section = Section(rows: rows)
         //        do {
@@ -43,7 +44,8 @@ class CenteredContentViewController: TableModelViewController {
         //            section.header = header
         //            section.footer = footer
         //        }
-        self.table = Table(sections: [section])
+        let table = Table(sections: [section])
+        self.table = table
     }
     
     func buttonPressed() {

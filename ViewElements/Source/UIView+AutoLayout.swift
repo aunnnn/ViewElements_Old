@@ -47,10 +47,10 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let w = self.widthAnchor.constraint(equalToConstant: width)
         w.isActive = true
-        w.priority = 999
+        w.priority = UILayoutPriority(rawValue: 999)
         let h = self.heightAnchor.constraint(equalToConstant: height)
         h.isActive = true
-        h.priority = 999
+        h.priority = UILayoutPriority(rawValue: 999)
         return self
     }
     
@@ -59,7 +59,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let h = self.heightAnchor.constraint(equalToConstant: height)
         h.isActive = true
-        h.priority = 1000
+        h.priority = UILayoutPriority(rawValue: 1000)
         return self
     }
     
@@ -68,7 +68,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let w = self.widthAnchor.constraint(equalToConstant: width)
         w.isActive = true
-        w.priority = 1000
+        w.priority = UILayoutPriority(rawValue: 1000)
         return self
     }
     
@@ -78,7 +78,7 @@ public extension UIView {
         let widthToHeight = width/height
         let ratio = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: widthToHeight)
         ratio.isActive = true
-        ratio.priority = 999
+        ratio.priority = UILayoutPriority(rawValue: 999)
         return self
     }
     
@@ -88,7 +88,7 @@ public extension UIView {
         let widthToHeight = ofImage.size.width / ofImage.size.height
         let ratio = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: widthToHeight)
         ratio.isActive = true
-        ratio.priority = 999
+        ratio.priority = UILayoutPriority(rawValue: 999)
         return self
     }
 }

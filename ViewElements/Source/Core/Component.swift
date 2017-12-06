@@ -6,12 +6,15 @@
 //  Copyright © 2560 Wirawit Rueopas. All rights reserved.
 //
 
-public protocol Component: class, ElementOfView {
+public protocol Component: ElementOfView {
     func render() -> StackProps
     var cachedStackProps: StackProps? { get set }
 }
 
-open class ComponentOf<T: Props>: Component, TypedPropsShouldElementUpdate {
+open class ComponentOf<U: Props>: Component, TypedPropsShouldElementUpdate {
+    
+    public typealias T = ComponentOf<U>
+    public typealias PropsType = U
     
     public let unTypedProps: Props
     
@@ -19,7 +22,7 @@ open class ComponentOf<T: Props>: Component, TypedPropsShouldElementUpdate {
     // - different StackProps is returned based on condition (e.g. of props) inside render().
     public var cachedStackProps: StackProps?
 
-    public init(props: T) {
+    public init(props: U) {
         self.unTypedProps = props
     }
     
@@ -39,7 +42,7 @@ open class ComponentOf<T: Props>: Component, TypedPropsShouldElementUpdate {
         self.cachedStackProps = nil
     }
 
-    open func shouldElementUpdate(oldProps: T, newProps: T) -> Bool {
+    open func shouldElementUpdate(oldProps: ComponentOf<U>.T.PropsType, newProps: ComponentOf<U>.T.PropsType) -> Bool {
         return true
     }
 }
@@ -124,6 +127,14 @@ internal class _StackView: UIStackView, ElementDisplayable {
                     return
                 }
             }
+            
+            if debugMode {
+                guard let sv = sv as? UIView else { return }
+                sv.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+                sv.layer.borderWidth = 1
+                sv.layer.borderColor = UIColor.darkGray.cgColor
+            }
+            
             sv.update()
         }
     }

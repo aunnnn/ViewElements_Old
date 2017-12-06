@@ -137,14 +137,14 @@ fileprivate class AuthorTopRowComponent: ComponentOf<(String, String, String)> {
             lb.font = UIFont.systemFont(ofSize: 12)
             lb.textColor = .gray
             lb.numberOfLines = 1
-            lb.setContentCompressionResistancePriority(100, for: .horizontal)
+            lb.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 100), for: .horizontal)
         }
         
         let elDate = ElementOfLabel(props: self.props.2).styles { (lb) in
             lb.font = UIFont.systemFont(ofSize: 12)
             lb.textColor = .gray
             lb.numberOfLines = 1
-            lb.setContentCompressionResistancePriority(1000, for: .horizontal)
+            lb.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         }
         
         let elAction = ElementOfButton(props: "V").styles { (bt) in

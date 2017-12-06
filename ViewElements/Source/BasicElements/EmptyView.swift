@@ -17,7 +17,7 @@ public class EmptyView: BaseView, OptionalTypedPropsAccessible {
 
 public func FlexibleSpace() -> ElementOf<EmptyView> {
     return ElementOf<EmptyView>.init(props: ()).styles({ (v) in
-        v.setContentHuggingPriority(1, for: .horizontal)
-        v.setContentHuggingPriority(1, for: .vertical)
+        v.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
+        v.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
     })
 }

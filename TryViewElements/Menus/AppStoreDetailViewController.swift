@@ -34,7 +34,7 @@ class AppStoreDetailViewController: TableModelViewController {
         table.headerView = header
     }
     
-    func valueChanged(sender: UISegmentedControl) {
+    @objc func valueChanged(sender: UISegmentedControl) {
         showDetail(index: sender.selectedSegmentIndex)
     }
     

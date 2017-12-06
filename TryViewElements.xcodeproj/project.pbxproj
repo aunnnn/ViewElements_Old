@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3026B32E1FD7A7C900D3C0B0 /* ViewElements.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */; };
+		3026B32F1FD7A7C900D3C0B0 /* ViewElements.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3033FFFF1FD07B740067AE2A /* CenteredContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */; };
 		3044A5E51EE5AD3000A69F4B /* TwitterProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */; };
 		3044A5E71EE5B62800A69F4B /* TwitterProfileHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */; };
@@ -50,6 +52,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				3026B32F1FD7A7C900D3C0B0 /* ViewElements.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewElements.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredContentViewController.swift; sourceTree = "<group>"; };
 		3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TwitterProfileViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3044A5E61EE5B62800A69F4B /* TwitterProfileHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TwitterProfileHeaderView.xib; sourceTree = "<group>"; };
@@ -100,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3026B32E1FD7A7C900D3C0B0 /* ViewElements.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +114,7 @@
 		3099BEDB1ED434ED00844AF7 = {
 			isa = PBXGroup;
 			children = (
+				3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */,
 				3099BEE61ED434ED00844AF7 /* TryViewElements */,
 				3099BEE51ED434ED00844AF7 /* Products */,
 			);
@@ -222,6 +228,7 @@
 					3099BEE31ED434ED00844AF7 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = C4JRFH5FHP;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -422,7 +429,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aunwirawit.TryViewElements;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -437,7 +445,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.aunwirawit.TryViewElements;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

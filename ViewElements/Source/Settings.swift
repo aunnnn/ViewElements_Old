@@ -8,4 +8,5 @@
 
 import Foundation
 
+// Add a framework-wide setting here.
 public var debugMode = false

@@ -127,6 +127,14 @@ internal class _StackView: UIStackView, ElementDisplayable {
                     return
                 }
             }
+            
+            if debugMode {
+                guard let sv = sv as? UIView else { return }
+                sv.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+                sv.layer.borderWidth = 1
+                sv.layer.borderColor = UIColor.darkGray.cgColor
+            }
+            
             sv.update()
         }
     }

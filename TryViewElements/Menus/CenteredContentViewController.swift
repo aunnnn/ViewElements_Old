@@ -13,9 +13,15 @@ class CenteredContentViewController: TableModelViewController {
     override func setupTable() {
         let table = Table { () -> [Row] in
             
-            let header = Row(ElementOfLabel(props: "Hello World"))
-            return [header]
+            let header = Row(ElementOfLabel(props: "Hello World").styles({ (lb) in
+                lb.textAlignment = .center
+            }))
+            let msg = Row(ElementOfLabel(props: "To center the content like this, just set table.centersContentIfPossible = true").styles({ (lb) in
+                lb.textAlignment = .center
+            }))
+            return [header, msg]
         }
+        table.centersContentIfPossible = true
         self.table = table
     }
 }

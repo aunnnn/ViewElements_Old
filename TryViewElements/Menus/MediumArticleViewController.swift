@@ -47,10 +47,10 @@ class MediumArticleViewController: TableModelViewController {
                     ].map { (s: Any) -> Row in
                         switch s {
                         case let s as String:
-                            if s.characters.first! == "-" {
+                            if s[s.startIndex] == "-" {
                                 let start = s.index(s.startIndex, offsetBy: 1)
                                 let end = s.index(s.endIndex, offsetBy: 0)
-                                let sub = s.substring(with: start..<end)
+                                let sub = String(s[start..<end])
                                 return Row(MediumArticleComponent.Header(s: sub))
                             }
                             return Row(MediumArticleComponent.Paragraph(s: s, italic: false))

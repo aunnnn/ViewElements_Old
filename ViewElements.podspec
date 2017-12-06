@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
     # 1
     s.platform = :ios
-    s.ios.deployment_target = '8.0'
+    s.ios.deployment_target = '9.0'
     s.name = "ViewElements"
     s.summary = "ViewElements manages your UIViews for you."
     s.requires_arc = true
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
     s.source = { :git => "https://github.com/aunnnn/ViewElements.git", :tag => "#{s.version}"}
     s.framework = "UIKit"
 
-    s.source_files = "ViewElements/**/*.{swift}"
+    s.source_files = "ViewElements/Source/**/*.swift"
 end

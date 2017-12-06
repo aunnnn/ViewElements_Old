@@ -83,7 +83,7 @@ class TwitterProfileViewController: TableModelViewController {
                 
                 do /* Default height is 64+44, (nav+offset) */ {
                     let heightAnchor = headerImageView.heightAnchor.constraint(equalToConstant: 66+44)
-                    heightAnchor.priority = 999
+                    heightAnchor.priority = UILayoutPriority(rawValue: 999)
                     heightAnchor.isActive = true
                 }
                 
@@ -91,7 +91,7 @@ class TwitterProfileViewController: TableModelViewController {
                     let bottomToTableHeaderAnchor = headerImageView.bottomAnchor.constraint(
                         equalTo: self.tableView.tableHeaderView!.topAnchor,
                         constant: 44)
-                    bottomToTableHeaderAnchor.priority = 999
+                    bottomToTableHeaderAnchor.priority = UILayoutPriority(rawValue: 999)
                     bottomToTableHeaderAnchor.isActive = true
                 }
             }
@@ -100,7 +100,7 @@ class TwitterProfileViewController: TableModelViewController {
         
         do /* Not let the top of avatar pass the nav area (top + 70) */ {
             let c = (self.tableView.tableHeaderView!.subviews.first! as! TwitterProfileHeaderView).imageView.topAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: 70)
-            c.priority = 999
+            c.priority = UILayoutPriority(rawValue: 999)
             c.isActive = true
         }
     }

@@ -120,7 +120,7 @@ class MediumFeedViewController: TableModelViewController {
         let image: Row? = mockPost.image != nil ? Row(ElementOfImageView(props: mockPost.image!).styles { (imv) in
             let h = imv.heightAnchor.constraint(equalTo: imv.widthAnchor, multiplier: 0.6)
             h.isActive = true
-            h.priority = 999
+            h.priority = UILayoutPriority(rawValue: 999)
             imv.contentMode = .scaleAspectFill
             }.name("image")) : nil
         

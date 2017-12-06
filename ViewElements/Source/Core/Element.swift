@@ -14,8 +14,8 @@ public protocol ElementOfView: class, ViewBuildable, UnTypedPropsAccessible, UnT
 
 /// Abstraction of UIView that can represent Props. Similar to ViewModel in MVVM.
 public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, TypedPropsShouldElementUpdate where U: ElementDisplayable & OptionalTypedPropsAccessible {
-    
-    typealias T = U.PropsType
+    public typealias T = ElementOf<U>
+    public typealias PropsType = U.PropsType
     
     public let unTypedProps: Props
     public var stylesBlock: ((U) -> Void)?
@@ -30,15 +30,15 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
     private var name: String?
     private let uniqueID = randomAlphaNumericString(length: 10)
     
-    public init(props: T) {
+    public init(props: PropsType) {
         self.unTypedProps = props
     }
     
     public func build() -> UIView {
         return _build(method: U.buildMethod())
     }
-    
-    open func shouldElementUpdate(oldProps: T, newProps: T) -> Bool {
+
+    open func shouldElementUpdate(oldProps: ElementOf<U>.T.PropsType, newProps: ElementOf<U>.T.PropsType) -> Bool {
         return true
     }
     

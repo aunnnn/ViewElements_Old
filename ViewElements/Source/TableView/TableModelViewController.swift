@@ -445,7 +445,7 @@ extension UIResponder {
         return currentFirstResponder
     }
     
-    func findFirstResponder(sender: AnyObject) {
+    @objc func findFirstResponder(sender: AnyObject) {
         currentFirstResponder = self
     }
 }

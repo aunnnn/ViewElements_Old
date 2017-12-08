@@ -56,9 +56,14 @@ class ViewController: TableModelViewController {
   - Center the tableview's content (& disable scrolling if possible)
   - Automatically update estimatedRowHeight after a cell is displayed
 
-## Overview
+## Installation
+Add this to your Podfile:
+````
+pod 'ViewElements'
+````
 
-Most UIs in iOS can be solved by UITableView, this framework tries to make that easiest as possible.
+## Overview
+Most UIs in iOS can be solved by UITableView. This framework abstracts various types of views into an easy-to-use view models like Row, SectionHeader, SectionFooter, which you can compose them to get a UITableView up real fast.
 
 ### Element
 ViewElement provides a universal abstraction for a UIView, **Element**. Element contains **Props**, a data structure used to configure that view.

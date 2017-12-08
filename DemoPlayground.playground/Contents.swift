@@ -3,13 +3,14 @@
 import PlaygroundSupport
 import ViewElements
 
+//ViewElements.debugMode = true
+
 class CenteredContentViewController: TableModelViewController {
     
     var labelsCount = 0
     
     override func setupTable() {
-        
-        self.debugMode = true
+    
         let header = Row(ElementOfLabel(props: "Hello Oozou").styles({ (lb) in
             lb.font = UIFont.systemFont(ofSize: 40)
             lb.textAlignment = .center

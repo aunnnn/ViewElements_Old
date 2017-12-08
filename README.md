@@ -1,23 +1,60 @@
 # ViewElements
 
-(...In-progress)
 A framework to manage and reuse UIViews in iOS apps.
 
+````swift
+
+// 0. Subclass TableModelViewController
+class ViewController: TableModelViewController {
+
+  override func setup() {
+  
+    // 1. Create a Row, this is a built-in label element, support multiple lines by default
+    let titleRow = Row(ElementOfLabel(props: "Hello!"))
+
+    // 2. You can customize
+    let messageRow = Row(ElementOfLabel(props: "This is awesome").styles({ (lb) in
+        lb.textColor = .black
+        lb.font = UIFont.systemFont(ofSize: 12)
+        lb.textAlignment = .center
+        lb.numberOfLines = 1
+    }))
+    messageRow.backgroundColor = .gray
+    messageRow.layoutMarginStyle = .each(vertical: 4, horizontal: 12)
+    messageRow.rowHeight = 44
+        
+    // 3. For a custom element, you will need to declare type of props in MyCustomView, it can be anything, like a tuple.
+    let customProps = ("Wow", "This", "Is so flexible!")
+    let customRow = Row(ElementOf<MyCustomView>(props: customProps))
+    ...
+
+    // 4. To create a section header
+    let header = SectionHeader(ElementOfLabel(props: "Easy header"))
+
+    // 5. Building up Section
+    let section = Section(header: header, footer: nil, rows: [titleRow, messageRow, ...])
+
+    // 6. Building up Table
+    let table = Table(sections: [section]])
+
+    // 7. Then it works from this moment on!
+    self.table = table
+  }
+}
+````
+
 ## Features
-- Setup once, use everywhere :tada: as:
-  - UIView
-  - UITableViewCell
-  - UITableHeaderFooterView
+- Setup a view once, use everywhere :tada: as:
+  - Row (UITableViewCell)
+  - SectionHeader, SectionFooter (UITableHeaderFooterView)
   - tableHeaderView
-  - UICollectionViewCell (coming soon)
-- Less code for setting up tableview
-- Builtin keyboard avoiding :relieved:
-- Solve frequently-asked problems of table view:
-  - Hide trailing separator :relaxed:
-  - Configure separator styles by row
-  - AutoLayout for tableHeaderView :wink:
-  - Center table's content & disable scrolling (if possible)
-  - Update estimatedRowHeight after a cell is displayed
+- Built-in keyboard avoiding
+- Solve these common problems for you:
+  - Hide trailing separator (by default)
+  - Separator styles
+  - AutoLayout (If you create a custom view, you must setup the autolayout yourself correctly though)
+  - Center the tableview's content (& disable scrolling if possible)
+  - Automatically update estimatedRowHeight after a cell is displayed
 
 ## Overview
 
@@ -49,15 +86,21 @@ PS: Though stack view solves a lot of AutoLayout problems, consider making eleme
 PS2: *Right now Component doesn't support changes in views tree like in React. 
 Component only serves as a way to compose elements by nesting them together.*
 
-## Limitation
-This framework is suitable for creating static pages, e.g. page that has no states / animations on the content.
+## Limitations
+This framework is (at the moment) suitable for creating static pages, e.g. no states/interactions on the content.
 At the end of the day it's just a UITableView.
 For highly interactive page with many gestures, consider other options.
 
+## Roadmap
+1. I'm working on combining this with RxSwift, which allows us to use ViewElements on creating data-driven pages (e.g., any kinds of input forms, with reactivity). The idea is to use Rx setup block in propsType, instead of a fixed, stateful variable like String. For example (Reactive<RxLabel>) -> [Disposable].   
+2. Support UICollectionView
+  
+Then you can setup all your Rx things there at the element creation time. You have to implement RxLabel yourself though, and manage the DisposeBag there.
+
 ## Getting Started
 
-### 1. Create a view compatible with this framework
-- Make a UIView nib that subclasses BaseNibView (or BaseView if you create view programmatically)
+### 1. Create a view to use with this framework
+- Make a UIView nib that subclasses BaseNibView (for programmatically-created UIView, subclass BaseView)
 - Define *PropsType*
 - Implements setup/update functions
 
@@ -65,3 +108,13 @@ For highly interactive page with many gestures, consider other options.
 
 ## Examples
 See 'ViewElements/Examples'.
+
+## Alternatives
+You could look into these instead, probably more elegant that this framework lol:
+- [Eureka](https://github.com/xmartlabs/Eureka), for form building
+- [SwiftForms](https://github.com/ortuman/SwiftForms), for form building
+- [Leego](https://github.com/wangshengjia/LeeGo), general-purpose, very similar to this, not diving deep into this yet
+- [BrickKit](https://github.com/wayfair/brickkit-ios), super general-purpose, built with collection view, as it should be
+
+### Then Why ViewElements?
+It's easy to use and understand (I hope). Not much magic. If you know how to use UITableView, then you can get started right away.

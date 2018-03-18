@@ -8,16 +8,21 @@
 
 import UIKit
 import ViewElements
+import TryViewElements_UI
 
 class ExampleListViewController: TableModelViewController {
 
     override func viewDidLoad() {
         self.title = "Examples"
-        
+
+        let el = ElementOf<TestView>(props: "Test Nib View from another target.")
+        let rows: [Row] = (0...8).map {
+            Row(ElementOfLabel(props: Menu(rawValue: $0)!.name))
+        } + [Row(el)]
         let section = Section(
             header: nil,
             footer: nil,
-            rows: (0...8).map { Row(ElementOfLabel(props: Menu(rawValue: $0)!.name)) }
+            rows: rows
         )
         
         let table = Table.init(sections: [section])

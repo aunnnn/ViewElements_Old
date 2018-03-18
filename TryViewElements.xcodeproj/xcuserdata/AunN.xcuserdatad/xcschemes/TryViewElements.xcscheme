@@ -28,6 +28,20 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "30051B14205EABF2001F8088"
+               BuildableName = "TryViewElements_UI.framework"
+               BlueprintName = "TryViewElements+UI"
+               ReferencedContainer = "container:TryViewElements.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "3099BEE31ED434ED00844AF7"
                BuildableName = "TryViewElements.app"
                BlueprintName = "TryViewElements"

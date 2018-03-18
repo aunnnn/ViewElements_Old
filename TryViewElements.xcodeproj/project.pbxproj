@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30051B19205EABF2001F8088 /* TryViewElements_UI.h in Headers */ = {isa = PBXBuildFile; fileRef = 30051B17205EABF2001F8088 /* TryViewElements_UI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		30051B1C205EABF2001F8088 /* TryViewElements_UI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30051B15205EABF2001F8088 /* TryViewElements_UI.framework */; };
+		30051B1D205EABF2001F8088 /* TryViewElements_UI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 30051B15205EABF2001F8088 /* TryViewElements_UI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		30051B23205EAC19001F8088 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30051B22205EAC19001F8088 /* TestView.swift */; };
+		30051B25205EAC48001F8088 /* TestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 30051B24205EAC48001F8088 /* TestView.xib */; };
 		3026B32E1FD7A7C900D3C0B0 /* ViewElements.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */; };
 		3026B32F1FD7A7C900D3C0B0 /* ViewElements.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3033FFFF1FD07B740067AE2A /* CenteredContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */; };
@@ -45,6 +50,16 @@
 		30CC70471EDF1FF700F01BE3 /* user3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30CC70401EDF1FF700F01BE3 /* user3.jpg */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		30051B1A205EABF2001F8088 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3099BEDC1ED434ED00844AF7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30051B14205EABF2001F8088;
+			remoteInfo = "TryViewElements+UI";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		3092383C1ED61AF4005509B6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -52,6 +67,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				30051B1D205EABF2001F8088 /* TryViewElements_UI.framework in Embed Frameworks */,
 				3026B32F1FD7A7C900D3C0B0 /* ViewElements.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -60,6 +76,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		30051B15205EABF2001F8088 /* TryViewElements_UI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TryViewElements_UI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		30051B17205EABF2001F8088 /* TryViewElements_UI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TryViewElements_UI.h; sourceTree = "<group>"; };
+		30051B18205EABF2001F8088 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		30051B22205EAC19001F8088 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		30051B24205EAC48001F8088 /* TestView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestView.xib; sourceTree = "<group>"; };
 		3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewElements.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3033FFFE1FD07B740067AE2A /* CenteredContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredContentViewController.swift; sourceTree = "<group>"; };
 		3044A5E41EE5AD3000A69F4B /* TwitterProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = TwitterProfileViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -100,10 +121,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		30051B11205EABF2001F8088 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3099BEE11ED434ED00844AF7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30051B1C205EABF2001F8088 /* TryViewElements_UI.framework in Frameworks */,
 				3026B32E1FD7A7C900D3C0B0 /* ViewElements.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -111,11 +140,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		30051B16205EABF2001F8088 /* TryViewElements+UI */ = {
+			isa = PBXGroup;
+			children = (
+				30051B21205EABFC001F8088 /* Views */,
+				30051B17205EABF2001F8088 /* TryViewElements_UI.h */,
+				30051B18205EABF2001F8088 /* Info.plist */,
+			);
+			path = "TryViewElements+UI";
+			sourceTree = "<group>";
+		};
+		30051B21205EABFC001F8088 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				30051B22205EAC19001F8088 /* TestView.swift */,
+				30051B24205EAC48001F8088 /* TestView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3099BEDB1ED434ED00844AF7 = {
 			isa = PBXGroup;
 			children = (
 				3026B32D1FD7A7C900D3C0B0 /* ViewElements.framework */,
 				3099BEE61ED434ED00844AF7 /* TryViewElements */,
+				30051B16205EABF2001F8088 /* TryViewElements+UI */,
 				3099BEE51ED434ED00844AF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -124,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				3099BEE41ED434ED00844AF7 /* TryViewElements.app */,
+				30051B15205EABF2001F8088 /* TryViewElements_UI.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -196,7 +246,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		30051B12205EABF2001F8088 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30051B19205EABF2001F8088 /* TryViewElements_UI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		30051B14205EABF2001F8088 /* TryViewElements+UI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30051B20205EABF2001F8088 /* Build configuration list for PBXNativeTarget "TryViewElements+UI" */;
+			buildPhases = (
+				30051B10205EABF2001F8088 /* Sources */,
+				30051B11205EABF2001F8088 /* Frameworks */,
+				30051B12205EABF2001F8088 /* Headers */,
+				30051B13205EABF2001F8088 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TryViewElements+UI";
+			productName = "TryViewElements+UI";
+			productReference = 30051B15205EABF2001F8088 /* TryViewElements_UI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		3099BEE31ED434ED00844AF7 /* TryViewElements */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3099BEF61ED434ED00844AF7 /* Build configuration list for PBXNativeTarget "TryViewElements" */;
@@ -209,6 +288,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				30051B1B205EABF2001F8088 /* PBXTargetDependency */,
 			);
 			name = TryViewElements;
 			productName = TryViewElements;
@@ -225,6 +305,12 @@
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "Wirawit Rueopas";
 				TargetAttributes = {
+					30051B14205EABF2001F8088 = {
+						CreatedOnToolsVersion = 9.2;
+						DevelopmentTeam = C4JRFH5FHP;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
 					3099BEE31ED434ED00844AF7 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = C4JRFH5FHP;
@@ -247,11 +333,20 @@
 			projectRoot = "";
 			targets = (
 				3099BEE31ED434ED00844AF7 /* TryViewElements */,
+				30051B14205EABF2001F8088 /* TryViewElements+UI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		30051B13205EABF2001F8088 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30051B25205EAC48001F8088 /* TestView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3099BEE21ED434ED00844AF7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -277,6 +372,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		30051B10205EABF2001F8088 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30051B23205EAC19001F8088 /* TestView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3099BEE01ED434ED00844AF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,6 +408,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		30051B1B205EABF2001F8088 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30051B14205EABF2001F8088 /* TryViewElements+UI */;
+			targetProxy = 30051B1A205EABF2001F8088 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		3099BEEB1ED434ED00844AF7 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -325,6 +436,67 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		30051B1E205EABF2001F8088 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C4JRFH5FHP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "TryViewElements+UI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aunwirawit.TryViewElements-UI";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		30051B1F205EABF2001F8088 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = C4JRFH5FHP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "TryViewElements+UI/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.aunwirawit.TryViewElements-UI";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		3099BEF41ED434ED00844AF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -435,6 +607,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = C4JRFH5FHP;
 				INFOPLIST_FILE = TryViewElements/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -451,6 +624,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = C4JRFH5FHP;
 				INFOPLIST_FILE = TryViewElements/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
@@ -465,6 +639,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		30051B20205EABF2001F8088 /* Build configuration list for PBXNativeTarget "TryViewElements+UI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30051B1E205EABF2001F8088 /* Debug */,
+				30051B1F205EABF2001F8088 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3099BEDF1ED434ED00844AF7 /* Build configuration list for PBXProject "TryViewElements" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

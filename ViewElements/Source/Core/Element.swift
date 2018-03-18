@@ -64,8 +64,7 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
             return view
             
         case .nib:
-            
-            guard let nib = Bundle.main.loadNibNamed("\(U.self)", owner: nil, options: nil) else {
+            guard let nib = Bundle(for: U.self).loadNibNamed("\(U.self)", owner: nil, options: nil) else {
                 fatalError("The nib with name '\(U.self)' is not found.")
             }
             

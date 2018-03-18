@@ -75,11 +75,11 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
                 fatalError("A view instantiated from nib (\(U.self)) must inherit from 'BaseNibView'.")
             }
             
-            baseView.didAwakeFromNibBlock = {
+            baseView.didAwakeFromNibBlock = { [weak self] in
                 view.setup()
+                self?.stylesBlock?(view)
                 view.element = self
                 view.update()
-                
             }
             return view
         }

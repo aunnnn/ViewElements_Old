@@ -69,16 +69,16 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
             }
             
             let view = nib.first! as! U
-            
             guard let baseView = view as? BaseNibView else {
                 fatalError("A view instantiated from nib (\(U.self)) must inherit from 'BaseNibView'.")
             }
             
-            baseView.didAwakeFromNibBlock = { [weak self] in
-                view.setup()
-                self?.stylesBlock?(view)
-                view.element = self
-                view.update()
+            baseView.didAwakeFromNibBlock = { [weak self, weak view] in
+                guard let v = view else { return }
+                v.setup()
+                self?.stylesBlock?(v)
+                v.element = self
+                v.update()
             }
             return view
         }

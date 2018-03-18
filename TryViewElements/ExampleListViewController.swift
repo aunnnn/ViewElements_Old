@@ -30,7 +30,7 @@ class ExampleListViewController: TableModelViewController {
         table.sections.flatMap { $0.rows }.forEach { (row) in
             row.selectionStyle = .default
             row.separatorStyle = .fullWidth
-            row.rowHeight = 44
+//            row.rowHeight = 44
         }
         
         self.table = table

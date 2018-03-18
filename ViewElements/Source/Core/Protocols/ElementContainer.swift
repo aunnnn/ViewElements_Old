@@ -54,22 +54,10 @@ extension ElementContainer {
     
     /// Configure container.
     ///
-    /// Normally containerView is UITableViewCell / UITableHeaderFooterView's *contentView*, where the *layout margins* reflect with the model.
+    /// Normally containerView is *contentView of UITableViewCell/ UITableHeaderFooterView*, where the *layout margins* reflect with the model.
     func configure(containerView: UIView) {
         containerView.backgroundColor = self.backgroundColor
         containerView.preservesSuperviewLayoutMargins = false
         containerView.layoutMargins = self.layoutMarginsStyle.value
-    }
-    
-    public func buildContainerViewAndWrap(elementView: UIView) -> UIView {
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        
-        containerView.addSubview(elementView)
-        elementView.al_pinToLayoutMarginsGuide(ofView: containerView)
-        
-        self.configure(containerView: containerView)
-        self.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: containerView, elementView: elementView)
-        return containerView
     }
 }

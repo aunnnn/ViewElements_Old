@@ -48,11 +48,10 @@ internal class TableSectionHeaderFooterView: UITableViewHeaderFooterView {
         self._elementView = _view
         
         headerFooter.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: self.contentView, elementView: _view)
-        
         self.contentView.addSubview(_view)
         _view.al_pinToLayoutMarginsGuide(ofView: self.contentView)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("Initialising via storyboard is not suppported.")
     }

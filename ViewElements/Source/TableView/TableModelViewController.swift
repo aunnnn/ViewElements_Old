@@ -79,7 +79,7 @@ open class TableModelViewController: UIViewController {
                 
                 header.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: containerView, elementView: headerView)
                 headerView.al_pinToLayoutMarginsGuide(ofView: containerView)
-                header.configure(containerView: containerView)
+                header.prepare(containerView: containerView)
                 
                 self.tableView.tableHeaderView = containerView
                 
@@ -286,10 +286,10 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        row.configure(rootView: cell)
+        row.prepare(rootView: cell)
         cell.selectionStyle = row.selectionStyle
         
-        row.configure(containerView: cell.contentView)
+        row.prepare(containerView: cell.contentView)
         
         if debugMode {
             cell.contentView.border(width: 1, color: .red)
@@ -362,14 +362,14 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
         // because it's not recommended to set backgroundColor of header footer view.
         headerView.preservesSuperviewLayoutMargins = false
         headerView.layoutMargins = .zero
-        
-        header.configure(containerView: headerView.contentView)
-        
+
+        header.prepare(containerView: headerView.contentView)
+        headerView.headerFooter = header
+
         if debugMode {
             headerView.contentView.border(width: 1, color: .blue)
             headerView._elementView?.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
         }
-        
         return headerView
     }
     
@@ -407,7 +407,8 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
         footerView.preservesSuperviewLayoutMargins = false
         footerView.layoutMargins = .zero
         
-        footer.configure(containerView: footerView.contentView)
+        footer.prepare(containerView: footerView.contentView)
+        footerView.headerFooter = footer
         
         if debugMode {
             footerView.contentView.border(width: 1, color: .blue)

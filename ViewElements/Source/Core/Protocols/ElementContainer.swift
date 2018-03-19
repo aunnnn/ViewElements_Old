@@ -26,6 +26,9 @@ public protocol ElementContainer {
 }
 
 extension ElementContainer {
+
+    /// Make container view (aka `tableViewCell.contentView`) and elementView same background color as this ElementContainer & set it to opaque.
+    /// It helps optimize rendering.
     func setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: UIView, elementView: UIView) {
         if self.childrenHaveSameBackgroundColorAsContainer {
             if self.backgroundColor == .clear {
@@ -43,19 +46,15 @@ extension ElementContainer {
         }
     }
     
-    /// Configure root view.
-    ///
-    /// Normally rootView is UITableViewCell/ UITableHeaderFooterView.
-    func configure(rootView: UIView) {
+    /// Prepare root view (`UITableViewCell/ UITableHeaderFooterView`). E.g. setting layoutMargins to .zero.
+    func prepare(rootView: UIView) {
         rootView.backgroundColor = self.backgroundColor
         rootView.preservesSuperviewLayoutMargins = false
         rootView.layoutMargins = .zero
     }
     
-    /// Configure container.
-    ///
-    /// Normally containerView is *contentView of UITableViewCell/ UITableHeaderFooterView*, where the *layout margins* reflect with the model.
-    func configure(containerView: UIView) {
+    /// Prepare containerView (`UITableViewCell/ UITableHeaderFooterView.contentView`).
+    func prepare(containerView: UIView) {
         containerView.backgroundColor = self.backgroundColor
         containerView.preservesSuperviewLayoutMargins = false
         containerView.layoutMargins = self.layoutMarginsStyle.value

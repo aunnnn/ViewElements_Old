@@ -19,7 +19,7 @@ public protocol ElementContainer {
     var layoutMarginsStyle: Row.LayoutMarginStyle { get }
     
     /// Default is false.
-    /// If true, upon view construction, all children's background color are automatically set to Row's backgroundColor,
+    /// If true, upon view construction, all children's background colors are automatically set to Row's backgroundColor,
     /// and isOpaque is set to true.
     /// This is for rendering optimization.
     var childrenHaveSameBackgroundColorAsContainer: Bool { get }
@@ -28,21 +28,18 @@ public protocol ElementContainer {
 extension ElementContainer {
 
     /// Make container view (aka `tableViewCell.contentView`) and elementView same background color as this ElementContainer & set it to opaque.
-    /// It helps optimize rendering.
-    func setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: UIView, elementView: UIView) {
-        if self.childrenHaveSameBackgroundColorAsContainer {
-            if self.backgroundColor == .clear {
-                warn("\(self.element.viewIdentifier) - childrenHaveSameBackgroundColorAsContainer is true but found '.clear' background color. ")
-            }
-            
-            containerView.backgroundColor = self.backgroundColor
-            containerView.isOpaque = true
-            if let stack = elementView as? _StackView {
-                stack.setAllChildrenOpaqueBackgroundColor(color: self.backgroundColor)
-            } else {
-                elementView.backgroundColor = self.backgroundColor
-                elementView.isOpaque = true
-            }
+    func setOpaqueBackgroundColorForContainerAndChildrenElements(containerView: UIView, elementView: UIView) {
+        if self.backgroundColor == .clear {
+            warn("\(self.element.viewIdentifier) - childrenHaveSameBackgroundColorAsContainer is true but found '.clear' background color. ")
+        }
+
+        containerView.backgroundColor = self.backgroundColor
+        containerView.isOpaque = true
+        if let stack = elementView as? _StackView {
+            stack.setAllChildrenOpaqueBackgroundColor(color: self.backgroundColor)
+        } else {
+            elementView.backgroundColor = self.backgroundColor
+            elementView.isOpaque = true
         }
     }
     

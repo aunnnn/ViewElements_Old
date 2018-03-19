@@ -46,11 +46,12 @@ internal final class TableRowViewCell: UITableViewCell {
             fatalError("View built from element must conform to ElementDisplayable.")
         }
         self._elementView = _view
-        
-        row.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: self.contentView, elementView: _view)
-        
         self.contentView.addSubview(_view)
-        
+
+        if row.childrenHaveSameBackgroundColorAsContainer {
+            row.setOpaqueBackgroundColorForContainerAndChildrenElements(containerView: self.contentView, elementView: _view)
+        }
+
         if row.pinToEdgesInsteadOfLayoutMarginsGuide {
             _view.al_pinToEdges(ofView: self.contentView)
         } else {

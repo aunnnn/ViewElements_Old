@@ -76,9 +76,9 @@ open class TableModelViewController: UIViewController {
                 let containerView = UIView()
                 containerView.translatesAutoresizingMaskIntoConstraints = false
                 containerView.addSubview(headerView)
-                
-                header.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: containerView, elementView: headerView)
+
                 headerView.al_pinToLayoutMarginsGuide(ofView: containerView)
+
                 header.prepare(containerView: containerView)
                 
                 self.tableView.tableHeaderView = containerView
@@ -87,6 +87,10 @@ open class TableModelViewController: UIViewController {
                 containerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
                 containerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
                 containerView.topAnchor.constraint(equalTo: self.tableView.topAnchor).isActive = true
+
+                if header.childrenHaveSameBackgroundColorAsContainer {
+                    header.setOpaqueBackgroundColorForContainerAndChildrenElements(containerView: containerView, elementView: headerView)
+                }
             }
         }
     }

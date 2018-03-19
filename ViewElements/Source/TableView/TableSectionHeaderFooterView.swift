@@ -46,10 +46,12 @@ internal class TableSectionHeaderFooterView: UITableViewHeaderFooterView {
             fatalError("View built from element must conform to ElementDisplayable.")
         }
         self._elementView = _view
-        
-        headerFooter.setOpaqueBackgroundColorForContainerAndChildrenElementsIfNecessary(containerView: self.contentView, elementView: _view)
         self.contentView.addSubview(_view)
         _view.al_pinToLayoutMarginsGuide(ofView: self.contentView)
+
+        if headerFooter.childrenHaveSameBackgroundColorAsContainer {
+            headerFooter.setOpaqueBackgroundColorForContainerAndChildrenElements(containerView: self.contentView, elementView: _view)
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

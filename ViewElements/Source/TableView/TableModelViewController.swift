@@ -57,10 +57,9 @@ open class TableModelViewController: UIViewController {
         
         do {
             let tableView = self.tableView
-            
+            tableView.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(tableView)
-            tableView.frame = self.view.bounds
-            tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            tableView.al_pinToEdges(ofView: self.view)
             tableView.backgroundColor = .clear
             tableView.delegate = self
             tableView.dataSource = self

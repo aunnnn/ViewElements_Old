@@ -15,15 +15,18 @@ class ExampleListViewController: TableModelViewController {
     override func viewDidLoad() {
         self.title = "Examples"
 
-        let el = ElementOf<TestView>(props: "Test Nib View from another target.")
+        let el = ElementOf<TestView>(props: "Creating section header is as easy as creating the rows. Moreover this header view is created with nib and is loaded from another target.")
+
         let rows: [Row] = (0...8).map {
             Row(ElementOfLabel(props: Menu(rawValue: $0)!.name))
-        } + [Row(el)]
+        }
         let section = Section(
             header: nil,
             footer: nil,
             rows: rows
         )
+
+        section.header = SectionHeader(el)
         
         let table = Table.init(sections: [section])
         

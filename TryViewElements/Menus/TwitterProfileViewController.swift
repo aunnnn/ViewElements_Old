@@ -19,13 +19,11 @@ class TwitterProfileViewController: TableModelViewController {
         super.viewDidLoad()
         self.title = nil
         self.view.backgroundColor = .white
-        
-        /* Manually manage the tableView's content inset, set it to 64 (status bar + nav height) */
-        
-        self.automaticallyAdjustsScrollViewInsets = false
-        self.tableView.contentInset = .init(top: 64, left: 0, bottom: 0, right: 0)
-        self.tableView.contentOffset = .init(x: 0, y: -64)
-        
+
+//        self.automaticallyAdjustsScrollViewInsets = false
+//        self.tableView.contentInset = .init(top: 64, left: 0, bottom: 0, right: 0)
+//        self.tableView.contentOffset = .init(x: 0, y: -64)
+
         do /* Make stretchy header image view, this will be above tableHeaderView */ {
             
             let headerImageView = UIImageView(image: #imageLiteral(resourceName: "twitterbg.jpeg"))
@@ -182,7 +180,7 @@ class TwitterProfileViewController: TableModelViewController {
                 // So we fixed it by setting the inset only when it's not floating.
                 //
                 if !self.isSectionHeaderFloating(section: 0) {
-                    self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: sectionFrameInView.maxY, left: 0, bottom: 0, right: 0)
+                    self.tableView.scrollIndicatorInsets = UIEdgeInsets(top: sectionFrameInView.minY, left: 0, bottom: 0, right: 0)
                 }
             }
         }

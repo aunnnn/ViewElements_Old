@@ -65,8 +65,17 @@ public final class SectionHeader: ElementContainer {
     public var childrenHaveSameBackgroundColorAsContainer = false
     
     public var layoutMarginsStyle: Row.LayoutMarginStyle = .all(inset: 8)
-    public var sectionHeaderHeight: CGFloat = UITableViewAutomaticDimension
     public var estimatedSectionHeaderHeight: CGFloat = 32
+    public var sectionHeaderHeight: CGFloat = UITableViewAutomaticDimension {
+        didSet {
+            guard hasFixedHeight else { return }
+            estimatedSectionHeaderHeight = sectionHeaderHeight
+        }
+    }
+
+    private var hasFixedHeight: Bool {
+        return sectionHeaderHeight != UITableViewAutomaticDimension
+    }
     
     public init(_ element: @escaping @autoclosure () -> ElementOfView) {
         self.elementBlock = element
@@ -83,9 +92,17 @@ public final class SectionFooter: ElementContainer {
     public var backgroundColor: UIColor = .clear
     public var layoutMarginsStyle: Row.LayoutMarginStyle = .`default`
     public var childrenHaveSameBackgroundColorAsContainer = false
-    
-    public var sectionFooterHeight: CGFloat = UITableViewAutomaticDimension
     public var estimatedSectionFooterHeight: CGFloat = 32
+    public var sectionFooterHeight: CGFloat = UITableViewAutomaticDimension {
+        didSet {
+            guard hasFixedHeight else { return }
+            estimatedSectionFooterHeight = sectionFooterHeight
+        }
+    }
+
+    private var hasFixedHeight: Bool {
+        return sectionFooterHeight != UITableViewAutomaticDimension
+    }
     
     public init(_ element: @escaping @autoclosure () -> ElementOfView) {
         self.elementBlock = element

@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
     s.summary = "ViewElements manages your UIViews for you."
     s.requires_arc = true
 
-    s.version = "0.1.1"
+    s.version = "0.1.2"
     s.license = { :type => "MIT", :file => "LICENSE" }
     s.author = { "Wirawit" => "aun.wirawit@gmail.com" }
     s.homepage = "https://github.com/aunnnn/ViewElements"

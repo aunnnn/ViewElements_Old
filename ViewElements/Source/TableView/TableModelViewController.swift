@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// View controller that knows how to present `Table`. Extends this and sets the `table` value.
 open class TableModelViewController: UIViewController {
     
     public let tableView: UITableView
@@ -41,7 +42,8 @@ open class TableModelViewController: UIViewController {
         self.tableView = UITableView(frame: .zero, style: .plain)
         super.init(coder: aDecoder)
     }
- 
+
+    /// Setup `table` here. Note: This is called in `viewDidLoad`.
     open func setupTable() {
     
     }
@@ -97,21 +99,7 @@ open class TableModelViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
-    // MARK: Centering Content
-    open override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if table.centersContentIfPossible {
-            self.centerTableView(with: self.view.bounds.size)
-        }
         
-        // update scroll indicator to use guessed heights
-        if table.guessesSimilarHeightForCellsWithSameType {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
-        }
-    }
-    
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         // all guessed heights are invalid

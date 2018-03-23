@@ -6,7 +6,7 @@
 //  Copyright © 2560 Wirawit Rueopas. All rights reserved.
 //
 
-// *This bunch of protocols is just a reminder that only UIView can inherit from this protocol.
+// *This bunch of protocols is just a hack that only allow UIView to able to inherit from this protocol.
 
 /// A protocol for UIView that can be configured with Element.
 public protocol ElementDisplayable: NSCoding, UIAppearance, UIAppearanceContainer, UIDynamicItem, UITraitEnvironment, UICoordinateSpace, UIFocusItem, CALayerDelegate {

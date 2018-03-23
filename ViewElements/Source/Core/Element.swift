@@ -57,6 +57,7 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
         switch method {
         case .init:
             let view = U()
+            view.translatesAutoresizingMaskIntoConstraints = false
             view.setup()
             self.stylesBlock?(view)
             view.element = self
@@ -75,6 +76,7 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
             
             baseView.didAwakeFromNibBlock = { [weak self, weak view] in
                 guard let v = view else { return }
+                v.translatesAutoresizingMaskIntoConstraints = false
                 v.setup()
                 self?.stylesBlock?(v)
                 v.element = self

@@ -22,6 +22,7 @@ open class TableModelViewController: UIViewController {
     
     private var previousTableViewContentInset: UIEdgeInsets?
     private weak var previousActiveResponder: UIResponder?
+    private var latestViewWidth: CGFloat = 0.0
     
     public final func getRow(indexPath: IndexPath) -> Row {
         return table.sections[indexPath.section].rows[indexPath.row]
@@ -122,8 +123,15 @@ open class TableModelViewController: UIViewController {
         
         // keep tract to update once
         var shouldUpdateTableHeight = false
-        
-        if let headerView = tableView.tableHeaderView {
+
+        // *If view width doesn't change, table header view shouldn't change*
+        // Note: If we don't do this we'll call `layoutIfNeeded` below everytime we scroll!
+        let hasViewWidthChanged = latestViewWidth != self.view.bounds.width
+        if let headerView = tableView.tableHeaderView, hasViewWidthChanged {
+
+            // Update
+            latestViewWidth = self.view.bounds.width
+
             let previousHeight = headerView.bounds.height
             headerView.layoutIfNeeded()
             let newHeight = headerView.bounds.height

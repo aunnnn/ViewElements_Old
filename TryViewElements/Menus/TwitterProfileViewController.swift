@@ -200,15 +200,6 @@ class TwitterProfileViewController: TableModelViewController {
         self.setDefaultNavigationBar()
         super.viewWillDisappear(animated)
     }
-
-    override func willMove(toParentViewController parent: UIViewController?) {
-        if parent == nil { // popped
-            guard let nav = self.capturedNavigationController else { return }
-            nav.navigationBar.barTintColor = .white
-            nav.navigationBar.tintColor = .blue
-            nav.navigationBar.layoutIfNeeded()
-        }
-    }
     
     private func setTransparentNavigationBar() {
         guard let navBar = self.navigationController?.navigationBar else { return }

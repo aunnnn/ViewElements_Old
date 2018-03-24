@@ -26,8 +26,11 @@ open class BaseNibView: UIView, ElementDisplayable {
     }
     
     private var didAwakeFromNib = false
-    
+
+    /// Initial view setup, called once.
     open func setup() {}
+
+    /// Update view with new props. Use `self.props` to configure the view.
     open func update() {}
     open override func awakeFromNib() {
         super.awakeFromNib()

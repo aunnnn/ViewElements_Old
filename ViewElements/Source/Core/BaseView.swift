@@ -12,8 +12,11 @@ import UIKit
 open class BaseView: UIView, ElementDisplayable {
     
     public var element: ElementOfView?
-    
+
+    /// Initial view setup, called once.
     open func setup() {}
+
+    /// Update view with new props. Use `self.props` to configure the view.
     open func update() {}
     
     open class func buildMethod() -> ViewBuildMethod {

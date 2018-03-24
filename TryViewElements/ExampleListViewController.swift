@@ -14,10 +14,7 @@ class ExampleListViewController: TableModelViewController {
 
     override func viewDidLoad() {
         self.title = "Examples"
-
-        let el = ElementOf<TestView>(props: "Creating section header is as easy as creating the rows. Moreover this header view is created with nib and is loaded from another target.")
-
-        let rows: [Row] = (0...8).map {
+        let rows: [Row] = (0...11).map {
             Row(ElementOfLabel(props: Menu(rawValue: $0)!.name))
         }
         let section = Section(
@@ -25,15 +22,13 @@ class ExampleListViewController: TableModelViewController {
             footer: nil,
             rows: rows
         )
-
-        section.header = SectionHeader(el)
         
         let table = Table.init(sections: [section])
         
         table.sections.flatMap { $0.rows }.forEach { (row) in
             row.selectionStyle = .default
             row.separatorStyle = .fullWidth
-//            row.rowHeight = 44
+            row.rowHeight = 44
         }
         
         self.table = table
@@ -41,6 +36,12 @@ class ExampleListViewController: TableModelViewController {
         super.viewDidLoad()
         
         self.tableView.backgroundColor = .white
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.statusBarStyle = .default
+        self.setNeedsStatusBarAppearanceUpdate()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -65,7 +66,11 @@ private enum Menu: Int {
     case loading
     case tapToLoadMore
     case tailLoading
-    
+
+    case headerFooter
+    case textFieldAndKeyboard
+    case centeredContentAndKeyboard
+
     var name: String {
         switch self {
         case .centeredContent: return "Centered Content"
@@ -79,6 +84,10 @@ private enum Menu: Int {
         case .loading: return "Loading"
         case .tapToLoadMore: return "Tap to load more"
         case .tailLoading: return "Tail loading"
+
+        case .headerFooter: return "Header, footer"
+        case .textFieldAndKeyboard: return "Textfield and keyboard"
+        case .centeredContentAndKeyboard: return "Centered content and keyboard"
         }
     }
     
@@ -93,6 +102,9 @@ private enum Menu: Int {
         case .tapToLoadMore: return TapToLoadMoreViewController()
         case .tailLoading: return TailLoadingViewController()
         case .twitterProfile: return TwitterProfileViewController()
+        case .headerFooter: return HeaderFooterExampleViewController()
+        case .textFieldAndKeyboard: return TextFieldAndKeyboardExampleViewController()
+        case .centeredContentAndKeyboard: return CenteredContentAndKeyboardExampleViewController()
         }
     }
 }

@@ -12,7 +12,9 @@ import UIKit
 open class TableModelViewController: UIViewController {
     
     public let tableView: UITableView
-    
+
+    /// Space between first responder and keyboard when it's up. Default is 8.0.
+    public var keyboardToFirstResponderSpacing: CGFloat = 8.0
     public var table = Table()
     
     fileprivate var displayedIndexPaths: Set<IndexPath> = []
@@ -50,13 +52,8 @@ open class TableModelViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = .white
-        
         self.setupTable()
-        
-        self.registerForKeyboardNotifications()
-        
         do {
             let tableView = self.tableView
             tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,7 +96,17 @@ open class TableModelViewController: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-        
+
+    open override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerForKeyboardNotifications()
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        unregisterForKeyboardNotifications()
+    }
+
     open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         // all guessed heights are invalid
@@ -159,12 +166,19 @@ open class TableModelViewController: UIViewController {
                                  bottom: tableVerticalInset,
                                  right: 0)
         self.tableView.contentInset = inset
+        self.tableView.scrollIndicatorInsets = inset
     }
     
     // MARK: Keyboard Notifications
     private func registerForKeyboardNotifications() {
+        // For safety, unregister first
+        unregisterForKeyboardNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(notification:)), name: .UIKeyboardWillHide, object: nil)
+    }
+
+    private func unregisterForKeyboardNotifications() {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
@@ -180,44 +194,43 @@ open class TableModelViewController: UIViewController {
         
         /* Adjust tableview's inset */
         previousActiveResponder = responderView
-        let keyboardFrame = tableView.convert(kbFrame, from: nil)
-        let intersection = keyboardFrame.intersection(tableView.bounds)
 
-        // Not interest with table bounds.
-        guard !intersection.isNull else { return }
-        
-        // Bottom inset already make the table above keyboard than 8 pts.
-        if self.tableView.contentInset.bottom >= intersection.height + 8 { return }
-    
-        let contentInsets = UIEdgeInsets(top: tableView.contentInset.top, left: 0, bottom: intersection.height + 8, right: 0)
+        // Keyboard frame in tableView coordinate space
+        let keyboardFrame = tableView.convert(kbFrame, from: nil)
+
+        // This is the actual bounds of content of table view, with estimated x and width, since it's not relevant.
+        let tableContentBounds = CGRect(
+            x: tableView.bounds.minX,
+            y: tableView.bounds.minY + tableView.contentInset.top,
+            width: tableView.bounds.width,
+            height: tableView.contentSize.height)
+        let intersection = keyboardFrame.intersection(tableContentBounds)
+
+        // Not intersect.
+        if intersection.isNull { return }
+
+        let contentInsets = UIEdgeInsets(
+            top: max(tableView.contentInset.top - (intersection.height + keyboardToFirstResponderSpacing), 0.0),
+            left: 0,
+            bottom: intersection.height + keyboardToFirstResponderSpacing,
+            right: 0)
 
         if table.centersContentIfPossible {
             self.tableView.isScrollEnabled = true
         }
-        
+
         self.tableView.contentInset = contentInsets
+        self.tableView.scrollIndicatorInsets = contentInsets
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
         self.previousActiveResponder = nil
 
-        let duration: TimeInterval = TimeInterval(truncating: (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber) ?? NSNumber(value: 0.2))
-
-        let options: UIViewAnimationOptions
-        if let animationCurve = notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-            options = UIViewAnimationOptions(rawValue: UInt(truncating: animationCurve))
-        } else {
-            options = []
-        }
-
         if table.centersContentIfPossible {
-            UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
-                self.centerTableView(with: self.view.bounds.size)
-            }, completion: nil)
+            self.centerTableView(with: self.view.bounds.size)
         } else {
-            UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
-                self.tableView.contentInset = self.previousTableViewContentInset ?? .zero
-            }, completion: nil)
+            self.tableView.contentInset = self.previousTableViewContentInset ?? .zero
+            self.tableView.scrollIndicatorInsets = self.previousTableViewContentInset ?? .zero
         }
     }
     

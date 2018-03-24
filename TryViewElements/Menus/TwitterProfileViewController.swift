@@ -17,6 +17,9 @@ class TwitterProfileViewController: TableModelViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.setNeedsStatusBarAppearanceUpdate()
+
         self.title = nil
         self.view.backgroundColor = .white
 
@@ -80,7 +83,7 @@ class TwitterProfileViewController: TableModelViewController {
                 headerImageView.bottomAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: 64).isActive = true
                 
                 do /* Default height is 64+44, (nav+offset) */ {
-                    let heightAnchor = headerImageView.heightAnchor.constraint(equalToConstant: 66+44)
+                    let heightAnchor = headerImageView.heightAnchor.constraint(equalToConstant: 64+44)
                     heightAnchor.priority = UILayoutPriority(rawValue: 999)
                     heightAnchor.isActive = true
                 }
@@ -197,6 +200,15 @@ class TwitterProfileViewController: TableModelViewController {
         self.setDefaultNavigationBar()
         super.viewWillDisappear(animated)
     }
+
+    override func willMove(toParentViewController parent: UIViewController?) {
+        if parent == nil { // popped
+            guard let nav = self.capturedNavigationController else { return }
+            nav.navigationBar.barTintColor = .white
+            nav.navigationBar.tintColor = .blue
+            nav.navigationBar.layoutIfNeeded()
+        }
+    }
     
     private func setTransparentNavigationBar() {
         guard let navBar = self.navigationController?.navigationBar else { return }
@@ -204,14 +216,27 @@ class TwitterProfileViewController: TableModelViewController {
         navBar.setBackgroundImage(UIImage(), for: .default)
         navBar.shadowImage = UIImage()
         navBar.isUserInteractionEnabled = false
+        navBar.isTranslucent = true
+
+        navBar.tintColor = .white
     }
     
     private func setDefaultNavigationBar() {
-        guard let navBar = self.capturedNavigationController?.navigationBar else { return }
+        guard let nav = self.capturedNavigationController else { return }
+        let navBar = nav.navigationBar
         navBar.backgroundColor = .clear
         navBar.setBackgroundImage(nil, for: .default)
         navBar.shadowImage = nil
         navBar.isUserInteractionEnabled = true
+        navBar.isTranslucent = false
+        navBar.tintColor = .blue
+
+        if let parent = nav.viewControllers.last as? ExampleListViewController {
+            parent.transitionCoordinator?.animate(alongsideTransition: { (ctx) in
+                nav.navigationBar.barTintColor = .white
+                nav.navigationBar.tintColor = .blue
+            }, completion: nil)
+        }
     }
 }
 

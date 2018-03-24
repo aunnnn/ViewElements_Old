@@ -196,28 +196,34 @@ open class TableModelViewController: UIViewController {
         }
         
         self.tableView.contentInset = contentInsets
-//        self.tableView.scrollIndicatorInsets = contentInsets
     }
     
     @objc private func keyboardWillHide(notification: Notification) {
         self.previousActiveResponder = nil
-        
-        if table.centersContentIfPossible {
-            UIView.animate(withDuration: 0.2) {
-                self.centerTableView(with: self.view.bounds.size)
-            }
+
+        let duration: TimeInterval = TimeInterval(truncating: (notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber) ?? NSNumber(value: 0.2))
+
+        let options: UIViewAnimationOptions
+        if let animationCurve = notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+            options = UIViewAnimationOptions(rawValue: UInt(truncating: animationCurve))
         } else {
-            UIView.animate(withDuration: 0.2) {
+            options = []
+        }
+
+        if table.centersContentIfPossible {
+            UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
+                self.centerTableView(with: self.view.bounds.size)
+            }, completion: nil)
+        } else {
+            UIView.animate(withDuration: duration, delay: 0.0, options: options, animations: {
                 self.tableView.contentInset = self.previousTableViewContentInset ?? .zero
-//                self.tableView.scrollIndicatorInsets = .zero
-            }
+            }, completion: nil)
         }
     }
     
     open func tableModelViewControllerWillDisplay(row: Row, at indexPath: IndexPath) {
         
     }
-
 }
 
 extension TableModelViewController {

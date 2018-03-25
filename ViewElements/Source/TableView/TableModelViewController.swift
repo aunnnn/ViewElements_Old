@@ -50,7 +50,14 @@ open class TableModelViewController: UIViewController {
     open func setupTable() {
     
     }
-    
+
+    /// When create view controller programmatically, this is needed to prevent the system
+    /// automatically search for nib files (which could result to a hard-to-debug crash).
+    /// https://developer.apple.com/documentation/uikit/uiviewcontroller/1621487-nibname?language=swift
+    open override func loadView() {
+        super.loadView()
+    }
+
     open override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white

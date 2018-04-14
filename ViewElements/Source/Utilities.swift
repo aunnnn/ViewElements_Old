@@ -26,3 +26,8 @@ func randomAlphaNumericString(length: Int) -> String {
 func warn(_ items: Any...) {
     print("Warning: \(items)")
 }
+
+func warnAndAssertionFailure(_ items: Any...) {
+    print("Warning: \(items)")
+    assertionFailure("Warning: \(items)")
+}

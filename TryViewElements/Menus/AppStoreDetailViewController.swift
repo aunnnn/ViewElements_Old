@@ -10,16 +10,7 @@ import ViewElements
 
 class AppStoreDetailViewController: TableModelViewController {
     override func setupTable() {
-        let h: SectionHeader = {
-            let s = ElementOfSegmentedControl(props: (["Details", "Reviews", "Related"], 0)).styles({ (s) in
-                s.tintColor = UIColor.gray
-                s.addTarget(self, action: #selector(self.valueChanged(sender:)), for: .valueChanged)
-            })
-            
-            let sh = SectionHeader(s)
-            sh.layoutMarginsStyle = .each(vertical: 8, horizontal: 16)
-            return sh
-        }()
+        let h: SectionHeader = makeSegmentedControlHeader(selectedIndex: 0)
         
         let lb = Row(ElementOfLabel(props: "What is this!!"))
         lb.backgroundColor = MediumTheme.lightGray
@@ -37,10 +28,21 @@ class AppStoreDetailViewController: TableModelViewController {
     @objc func valueChanged(sender: UISegmentedControl) {
         showDetail(index: sender.selectedSegmentIndex)
     }
+
+    func makeSegmentedControlHeader(selectedIndex: Int) -> SectionHeader {
+        let s = ElementOfSegmentedControl(props: (["Details", "Reviews", "Related"], selectedIndex)).styles({ [unowned self] (s) in
+            s.tintColor = UIColor.gray
+            s.addTarget(self, action: #selector(self.valueChanged(sender:)), for: .valueChanged)
+        })
+
+        let sh = SectionHeader(s)
+        sh.layoutMarginsStyle = .each(vertical: 8, horizontal: 16)
+        return sh
+    }
     
     func showDetail(index: Int) {
-        let header = self.table.sections[0].header!
-        
+        let header = makeSegmentedControlHeader(selectedIndex: index)
+
         let section: Section = {
             switch index {
             case 0:

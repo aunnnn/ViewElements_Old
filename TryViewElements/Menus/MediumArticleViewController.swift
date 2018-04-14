@@ -169,7 +169,9 @@ class MediumArticleViewController: TableModelViewController {
     
     //    var stickyHeaderBar: UIView?
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+
         self.refreshFooterBorder()
         
 //        let trueFooterRectOnScreen = self.view.convert(unfloatingRect.origin, from: scrollView)

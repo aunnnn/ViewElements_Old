@@ -122,7 +122,9 @@ class TwitterProfileViewController: TableModelViewController {
         self.table = table
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        super.scrollViewDidScroll(scrollView)
+
         guard let headerImageView = self.headerImageView else { return }
         
         do /* Make header image front most on y ~ -44 to simulate nav bar */ {

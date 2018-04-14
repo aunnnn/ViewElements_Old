@@ -23,6 +23,10 @@ open class TableModelViewController: UIViewController {
     private var previousTableViewContentInset: UIEdgeInsets?
     private weak var previousActiveResponder: UIResponder?
     private var latestViewWidth: CGFloat = 0.0
+
+    /// This is the internal view that moves with scroll view. It is only used for AutoLayout with StretchyHeaderView.
+    private var tableViewTopMostLayoutGuideView: UIView?
+    private var tableViewTopMostLayoutGuideViewTopConstraint: NSLayoutConstraint?
     
     public final func getRow(indexPath: IndexPath) -> Row {
         return table.sections[indexPath.section].rows[indexPath.row]
@@ -75,9 +79,81 @@ open class TableModelViewController: UIViewController {
             if table.hidesTrailingEmptyRowSeparators {
                 tableView.tableFooterView = UIView(frame: .zero)
             }
-            
-            if let header = table.headerView {
-                
+
+            // We don't support `stretchyHeader` with `headerView`
+            // This gives preference to `stretchyHeader` first. If it is nil, then check `headerView` next.
+            if let stretchyHeader = table.stretchyHeaderView {
+                if (table.centersContentIfPossible) {
+                    warnAndAssertionFailure("Stretchy header must not be used with content centering mode. To use stretchy header, you must set `table.centersContentIfPossible` to false.")
+                    return
+                }
+
+                let guideView = UIView()
+                guideView.translatesAutoresizingMaskIntoConstraints = false
+                self.view.addSubview(guideView)
+                guideView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+                guideView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+                guideView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+
+                tableViewTopMostLayoutGuideViewTopConstraint = guideView.topAnchor.constraint(equalTo: self.view.topAnchor)
+                tableViewTopMostLayoutGuideViewTopConstraint?.constant = stretchyHeader.restingHeight
+                tableViewTopMostLayoutGuideViewTopConstraint?.isActive = true
+                tableViewTopMostLayoutGuideView = guideView
+
+                let headerView = stretchyHeader.element.build()
+                self.view.insertSubview(headerView, aboveSubview: self.tableView)
+
+                let hv = headerView
+
+                /* Pin to root view's left, right */
+                hv.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+                hv.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+
+                let stretchyBottomAnchorGuide = guideView.topAnchor // self.tableView.tableHeaderView!.topAnchor
+
+                switch stretchyHeader.stretchyBehavior {
+                case .scrollsUpWithContent:
+
+                    /* Default minimum height */
+                    let heightAnchor = hv.heightAnchor.constraint(equalToConstant: stretchyHeader.restingHeight)
+                    heightAnchor.priority = UILayoutPriority(999)
+                    heightAnchor.isActive = true
+
+                    /*
+                     Top of hv must be at the top of root view *or above it.*
+                     This makes the header respects minimum height and shifts
+                     up the content when it reaches the top.
+                     */
+                    hv.topAnchor.constraint(lessThanOrEqualTo: self.view.topAnchor).isActive = true
+
+                    /* Pin bottom of header image to top of tableHeaderView */
+                    let bottomToTableAnchor = hv.bottomAnchor.constraint(
+                        equalTo: stretchyBottomAnchorGuide)
+                    bottomToTableAnchor.priority = UILayoutPriority(1000)
+                    bottomToTableAnchor.isActive = true
+
+                case .shrinksToMinimumHeight(let minimumHeight):
+
+                    /* Pin stretchy's top to top of root */
+                    hv.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+
+                    /* Keep stretchy's bottom below root's top + minHeight (to stick view at top) */
+                    let stickyHeight = hv.bottomAnchor.constraint(greaterThanOrEqualTo: self.view.topAnchor, constant: minimumHeight)
+                    stickyHeight.priority = UILayoutPriority(1000)
+                    stickyHeight.isActive = true
+
+                    /* Pin bottom of header image to top of tableHeaderView */
+                    let bottomToTableAnchor = hv.bottomAnchor.constraint(
+                        equalTo: stretchyBottomAnchorGuide)
+                    bottomToTableAnchor.priority = UILayoutPriority(999)
+                    bottomToTableAnchor.isActive = true
+                }
+
+                self.tableView.contentInset = .init(top: stretchyHeader.restingHeight, left: 0, bottom: 0, right: 0)
+                self.tableView.contentOffset = .init(x: 0, y: -stretchyHeader.restingHeight)
+
+            } else if let header = table.headerView {
+
                 let headerView = header.element.build()
                 let containerView = UIView()
                 containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -86,9 +162,9 @@ open class TableModelViewController: UIViewController {
                 headerView.al_pinToLayoutMarginsGuide(ofView: containerView)
 
                 header.prepare(containerView: containerView)
-                
+
                 self.tableView.tableHeaderView = containerView
-                
+
                 // ** Must setup AutoLayout after set tableHeaderView.
                 containerView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
                 containerView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
@@ -159,6 +235,10 @@ open class TableModelViewController: UIViewController {
             self.tableView.endUpdates()
         }
     }
+
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        tableViewTopMostLayoutGuideViewTopConstraint?.constant = -scrollView.contentOffset.y
+    }
     
     private func centerTableView(with viewSize: CGSize) {
         
@@ -166,6 +246,7 @@ open class TableModelViewController: UIViewController {
         
         let tableVerticalInset = (viewSize.height - self.tableView.contentSize.height)/2
         if tableVerticalInset < 0 {
+            warn("Found tableView's content height more than view's height on `centersContentIfPossible` mode. Resetting back to default display mode.")
             tableView.contentInset = .zero
             tableView.alwaysBounceVertical = true
             tableView.isScrollEnabled = true
@@ -350,7 +431,7 @@ extension TableModelViewController: UITableViewDataSource, UITableViewDelegate {
         
         if table.updatesEstimatedRowHeights {            
             guard newEstimatedHeight >= 1 else {
-                print("Warning: Found new estimated height < 1 (\(newEstimatedHeight)) for view \(row.element.viewIdentifier). This value will be ignored.")
+                warn("Found new estimated height < 1 (\(newEstimatedHeight)) for view \(row.element.viewIdentifier). This value will be ignored.")
                 return
             }
             row.estimatedRowHeight = newEstimatedHeight

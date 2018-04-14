@@ -14,13 +14,18 @@ class ExampleListViewController: TableModelViewController {
 
     override func viewDidLoad() {
         self.title = "Examples"
-        let rows: [Row] = (0...11).map {
-            Row(ElementOfLabel(props: Menu(rawValue: $0)!.name))
+
+        var i = 0
+        var menuRows: [Row] = []
+        while let menu = Menu.init(rawValue: i) {
+            menuRows.append(Row(ElementOfLabel(props: menu.name)))
+            i += 1
         }
+
         let section = Section(
             header: nil,
             footer: nil,
-            rows: rows
+            rows: menuRows
         )
         
         let table = Table.init(sections: [section])
@@ -28,7 +33,6 @@ class ExampleListViewController: TableModelViewController {
         table.sections.flatMap { $0.rows }.forEach { (row) in
             row.selectionStyle = .default
             row.separatorStyle = .fullWidth
-            row.rowHeight = 44
         }
         
         self.table = table
@@ -71,6 +75,9 @@ private enum Menu: Int {
     case textFieldAndKeyboard
     case centeredContentAndKeyboard
 
+    case stretchyHeaderScrollsUp
+    case stretchyHeaderShrinksAndStick
+
     var name: String {
         switch self {
         case .centeredContent: return "Centered Content"
@@ -88,6 +95,8 @@ private enum Menu: Int {
         case .headerFooter: return "Header, footer"
         case .textFieldAndKeyboard: return "Textfield and keyboard"
         case .centeredContentAndKeyboard: return "Centered content and keyboard"
+        case .stretchyHeaderScrollsUp: return "Stretchy Header (Scrolls up mode)"
+        case .stretchyHeaderShrinksAndStick: return "Stretchy Header (Shrinks and stick mode)"
         }
     }
     
@@ -105,6 +114,8 @@ private enum Menu: Int {
         case .headerFooter: return HeaderFooterExampleViewController()
         case .textFieldAndKeyboard: return TextFieldAndKeyboardExampleViewController()
         case .centeredContentAndKeyboard: return CenteredContentAndKeyboardExampleViewController()
+        case .stretchyHeaderScrollsUp: return StretchyHeaderExampleViewController(isScrollsUpMode: true)
+        case .stretchyHeaderShrinksAndStick: return StretchyHeaderExampleViewController(isScrollsUpMode: false)
         }
     }
 }

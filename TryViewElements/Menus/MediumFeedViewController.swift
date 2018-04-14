@@ -154,7 +154,7 @@ class MediumFeedViewController: TableModelViewController {
             image,
             readmore,
             actions,
-            ].flatMap { $0 }
+            ].compactMap { $0 }
         
         all.inset(left: 20, right: 20)
         

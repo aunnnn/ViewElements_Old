@@ -89,8 +89,8 @@ open class TableModelViewController: UIViewController {
             // This gives preference to `stretchyHeader` first. If it is nil, then check `headerView` next.
             if table.stretchyHeaderView != nil {
                 self.reloadStretchyHeaderViewIfNeeded()
-            } else if let header = table.headerView {
-
+            } else if table.headerView != nil {
+                self.reloadTableHeaderViewIfNeeded()
             }
         }
     }
@@ -264,22 +264,33 @@ extension TableModelViewController {
 
     /// Reload the whole UI.
     public func reload() {
-        tableView.reloadData()
         reloadTableHeaderViewIfNeeded()
         reloadStretchyHeaderViewIfNeeded()
+        tableView.reloadData()
     }
 
     private func clearStretchyHeaderView() {
-        _stretchyHeaderView?.removeFromSuperview()
-        _stretchyHeaderView = nil
-        tableViewTopMostLayoutGuideViewTopConstraint = nil
-        tableViewTopMostLayoutGuideView?.removeFromSuperview()
-        tableViewTopMostLayoutGuideView = nil
+        if let hv = _stretchyHeaderView {
+            hv.removeConstraints(hv.constraints)
+            hv.removeFromSuperview()
+            _stretchyHeaderView = nil
+        }
+
+        if let gv = tableViewTopMostLayoutGuideView {
+            tableViewTopMostLayoutGuideViewTopConstraint = nil
+            gv.removeConstraints(gv.constraints)
+            gv.removeFromSuperview()
+            tableViewTopMostLayoutGuideView = nil
+        }
     }
 
     private func clearTableHeaderView() {
-        _tableHeaderView?.removeFromSuperview()
+        guard let hv = _tableHeaderView else { return }
+        hv.removeConstraints(hv.constraints)
+        hv.removeFromSuperview()
         _tableHeaderView = nil
+        latestViewWidth = -1
+        tableView.tableHeaderView = nil
     }
 
     public func reloadTableHeaderViewIfNeeded() {
@@ -310,6 +321,10 @@ extension TableModelViewController {
         if header.childrenHaveSameBackgroundColorAsContainer {
             header.setOpaqueBackgroundColorForContainerAndChildrenElements(containerView: containerView, elementView: headerView)
         }
+
+        self.tableView.contentInset = .zero
+        self.tableView.scrollIndicatorInsets = .zero
+        self.tableView.setContentOffset(.zero, animated: false)
     }
 
     func reloadStretchyHeaderViewIfNeeded() {
@@ -414,7 +429,12 @@ extension TableModelViewController {
         }
 
         self.tableView.contentInset = .init(top: stretchyHeader.restingHeight, left: 0, bottom: 0, right: 0)
-        self.tableView.contentOffset = .init(x: 0, y: -stretchyHeader.restingHeight)
+        if !stretchyHeader.adjustsTableViewScrollIndicatorInsetsBelowStretchyHeaderView {
+            self.tableView.scrollIndicatorInsets = .zero
+        } else {
+            self.tableView.scrollIndicatorInsets = .init(top: stretchyHeader.restingHeight, left: 0, bottom: 0, right: 0)
+        }
+        self.tableView.setContentOffset(.init(x: 0, y: -stretchyHeader.restingHeight), animated: false)
     }
     
     public func isSectionHeaderFloating(section: Int) -> Bool {

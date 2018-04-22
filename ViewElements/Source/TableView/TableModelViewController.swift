@@ -70,7 +70,7 @@ open class TableModelViewController: UIViewController {
             let tableView = self.tableView
             tableView.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(tableView)
-            tableView.al_pinToEdges(ofView: self.view)
+            tableView.al_pinToEdges(ofView: self.view, insets: .zero, priority: .defaultHigh)
             tableView.backgroundColor = .clear
             tableView.delegate = self
             tableView.dataSource = self

@@ -12,12 +12,18 @@ public extension UIView {
     
     /// Pin self to view's edges with inset.
     @discardableResult
-    func al_pinToEdges(ofView view: UIView, insets: UIEdgeInsets = .zero) -> UIView {
+    func al_pinToEdges(ofView view: UIView, insets: UIEdgeInsets = .zero, priority: UILayoutPriority = .required) -> UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.leftAnchor.constraint(equalTo: view.leftAnchor, constant: insets.left).isActive = true
-        self.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -insets.right).isActive = true
-        self.topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top).isActive = true
-        self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom).isActive = true
+        let constraints = [
+            self.leftAnchor.constraint(equalTo: view.leftAnchor, constant: insets.left),
+            self.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -insets.right),
+            self.topAnchor.constraint(equalTo: view.topAnchor, constant: insets.top),
+            self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -insets.bottom)
+        ]
+        constraints.forEach { (c) in
+            c.priority = priority
+        }
+        NSLayoutConstraint.activate(constraints)
         return self
     }
     
@@ -59,7 +65,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let h = self.heightAnchor.constraint(equalToConstant: height)
         h.isActive = true
-        h.priority = UILayoutPriority(rawValue: 1000)
+        h.priority = .required
         return self
     }
     
@@ -68,7 +74,7 @@ public extension UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let w = self.widthAnchor.constraint(equalToConstant: width)
         w.isActive = true
-        w.priority = UILayoutPriority(rawValue: 1000)
+        w.priority = .required
         return self
     }
     

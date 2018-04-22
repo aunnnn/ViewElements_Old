@@ -167,7 +167,7 @@ public final class StretchyHeader: ElementContainer {
     }()
 
     public var backgroundColor: UIColor                                = .clear
-    public var layoutMarginsStyle: Row.LayoutMarginStyle                = .`default`
+    public var layoutMarginsStyle: Row.LayoutMarginStyle                = .zero
     public var childrenHaveSameBackgroundColorAsContainer: Bool     	  = false
 
     /// The behavior of `StretchyHeader`.
@@ -186,7 +186,8 @@ public final class StretchyHeader: ElementContainer {
     /// **Important**: If `stretchyBehavior` is `shrinksToMinimumHeight(minHeight: CGFloat)`, `restingHeight` must be more than `minHeight`.
     public var restingHeight: CGFloat                                  = 200.0 {
         didSet {
-            if case let .shrinksToMinimumHeight(minHeight) = stretchyBehavior, minHeight > restingHeight  {
+            if case let .shrinksToMinimumHeight(minHeight) = stretchyBehavior,
+                minHeight > restingHeight {
                 assertionFailure("The height in `shrinksToMinimumHeight(CGFloat)` must be less than or equal `restingHeight`.")
             }
         }
@@ -194,6 +195,9 @@ public final class StretchyHeader: ElementContainer {
 
     /// The behavior of StretchyHeader. Default is `.scrollUpWithContent`.
     public let stretchyBehavior: StretchyBehavior
+
+    /// Whether to adjust scrollIndicatorInsets of table view to appear below the stretchy header. Default is `true`.
+    public var adjustsTableViewScrollIndicatorInsetsBelowStretchyHeaderView: Bool = true
 
     private let elementBlock: () -> ElementOfView
 

@@ -50,10 +50,11 @@ extension ElementContainer {
         rootView.layoutMargins = .zero
     }
     
-    /// Prepare containerView (`UITableViewCell/ UITableHeaderFooterView.contentView`).
-    func prepare(containerView: UIView) {
-        containerView.backgroundColor = self.backgroundColor
-        containerView.preservesSuperviewLayoutMargins = false
-        containerView.layoutMargins = self.layoutMarginsStyle.value
+    /// Prepare content view (`UITableViewCell/ UITableHeaderFooterView.contentView`).
+    /// This is where `layoutMarginsStyle` is applied.
+    func prepare(contentView: UIView) {
+        contentView.backgroundColor = self.backgroundColor
+        contentView.preservesSuperviewLayoutMargins = false
+        contentView.layoutMargins = self.layoutMarginsStyle.value
     }
 }

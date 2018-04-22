@@ -77,6 +77,7 @@ private enum Menu: Int {
 
     case stretchyHeaderScrollsUp
     case stretchyHeaderShrinksAndStick
+    case stretchyHeaderReload
 
     var name: String {
         switch self {
@@ -97,6 +98,7 @@ private enum Menu: Int {
         case .centeredContentAndKeyboard: return "Centered content and keyboard"
         case .stretchyHeaderScrollsUp: return "Stretchy Header (Scrolls up mode)"
         case .stretchyHeaderShrinksAndStick: return "Stretchy Header (Shrinks and stick mode)"
+        case .stretchyHeaderReload: return "Stretchy Header Reload"
         }
     }
     
@@ -116,6 +118,7 @@ private enum Menu: Int {
         case .centeredContentAndKeyboard: return CenteredContentAndKeyboardExampleViewController()
         case .stretchyHeaderScrollsUp: return StretchyHeaderExampleViewController(isScrollsUpMode: true)
         case .stretchyHeaderShrinksAndStick: return StretchyHeaderExampleViewController(isScrollsUpMode: false)
+        case .stretchyHeaderReload: return StretchyHeaderReloadExampleViewController()
         }
     }
 }

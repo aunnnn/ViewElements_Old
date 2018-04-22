@@ -22,6 +22,7 @@
                     <color key="backgroundColor" red="0.0" green="0.43921568630000002" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="2Wu-Sf-sgY"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="Igg-3b-L7B"/>
                         <constraint firstAttribute="width" secondItem="OSm-tb-cYe" secondAttribute="height" multiplier="1:1" id="ULk-aW-qdC"/>
                     </constraints>
                 </imageView>

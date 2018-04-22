@@ -12,7 +12,7 @@ public extension UIView {
     
     /// Pin self to view's edges with inset.
     @discardableResult
-    func al_pinToEdges(ofView view: UIView, insets: UIEdgeInsets = .zero, priority: UILayoutPriority = .required) -> UIView {
+    func al_pinToEdges(ofView view: UIView, insets: UIEdgeInsets = .zero, priority: UILayoutPriority = UILayoutPriority(1000)) -> UIView {
         self.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
             self.leftAnchor.constraint(equalTo: view.leftAnchor, constant: insets.left),

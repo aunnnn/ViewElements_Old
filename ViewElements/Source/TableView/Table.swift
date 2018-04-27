@@ -196,8 +196,8 @@ public final class StretchyHeader: ElementContainer {
     /// The behavior of StretchyHeader. Default is `.scrollUpWithContent`.
     public let stretchyBehavior: StretchyBehavior
 
-    /// Whether to adjust scrollIndicatorInsets of table view to appear below the stretchy header. Default is `true`.
-    public var adjustsTableViewScrollIndicatorInsetsBelowStretchyHeaderView: Bool = true
+    /// If `true`, will adjust scrollIndicatorInsets of table view to always appear below the stretchy header. Default is `false`.
+    public var adjustsTableViewScrollIndicatorInsetsBelowStretchyHeaderView: Bool = false
 
     private let elementBlock: () -> ElementOfView
 
@@ -240,7 +240,12 @@ public final class Table {
     public var stretchyHeaderView: StretchyHeader? {
         didSet {
             if stretchyHeaderView != nil && headerView != nil {
-                warnAndAssertionFailure("`stretchyHeaderView` cannot be used together with `headerView`. `headerView` will be hidden.")
+                warnAndAssertionFailure("`stretchyHeaderView` cannot be used together with `headerView`. `headerView` will be set to nil.")
+                headerView = nil
+            }
+            if centersContentIfPossible {
+                warnAndAssertionFailure("Stretchy header must not be used with content centering mode. `table.centersContentIfPossible` will be set to false.")
+                centersContentIfPossible = false
             }
         }
     }
@@ -254,7 +259,8 @@ public final class Table {
     public var headerView: TableHeaderView? {
         didSet {
             if stretchyHeaderView != nil && headerView != nil {
-                warnAndAssertionFailure("`stretchyHeaderView` cannot be used together with `headerView`. `headerView` will be hidden.")
+                warnAndAssertionFailure("`stretchyHeaderView` cannot be used together with `headerView`. `stretchyHeaderView` will be set to nil.")
+                stretchyHeaderView = nil
             }
         }
     }

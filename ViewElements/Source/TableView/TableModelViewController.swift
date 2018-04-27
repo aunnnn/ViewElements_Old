@@ -384,7 +384,7 @@ extension TableModelViewController {
             stretchyHeaderView = containerView
         }
         
-        self.view.insertSubview(stretchyHeaderView, aboveSubview: tableView)
+        self.tableView.addSubview(stretchyHeaderView)
 
         let hv = stretchyHeaderView
 

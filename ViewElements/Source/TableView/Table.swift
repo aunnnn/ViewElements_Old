@@ -37,11 +37,11 @@ public final class Row: ElementContainer {
     
     // MARK: Cell Appearances
     
-    public var separatorStyle: SeparatorStyle                       = .none
-    public var selectionStyle: UITableViewCellSelectionStyle        = .none
-    public var backgroundColor: UIColor                             = .clear
-    
-    public var childrenHaveSameBackgroundColorAsContainer           = false
+    public var separatorStyle: SeparatorStyle                            = .none
+    public var selectionStyle: UITableViewCellSelectionStyle              = .none
+    public var backgroundColor: UIColor                                  = .clear
+    public var childrenHaveSameBackgroundColorAsContainer                = false
+    public var isUserInteractionEnabled: Bool                            = true
     
     public var didSelectRow: ((Row) -> Void)?
     
@@ -61,11 +61,12 @@ public final class SectionHeader: ElementContainer {
         return self.elementBlock()
     }()
     
-    public var backgroundColor: UIColor = .clear
-    public var childrenHaveSameBackgroundColorAsContainer = false
-    
-    public var layoutMarginsStyle: Row.LayoutMarginStyle = .all(inset: 8)
-    public var estimatedSectionHeaderHeight: CGFloat = 32
+    public var backgroundColor: UIColor 	                              = .clear
+    public var childrenHaveSameBackgroundColorAsContainer              = false
+    public var isUserInteractionEnabled: Bool                          = true
+    public var layoutMarginsStyle: Row.LayoutMarginStyle                = .all(inset: 8)
+    public var estimatedSectionHeaderHeight: CGFloat                   = 32
+
     public var sectionHeaderHeight: CGFloat = UITableViewAutomaticDimension {
         didSet {
             guard hasFixedHeight else { return }
@@ -89,10 +90,12 @@ public final class SectionFooter: ElementContainer {
         return self.elementBlock()
     }()
     
-    public var backgroundColor: UIColor = .clear
-    public var layoutMarginsStyle: Row.LayoutMarginStyle = .`default`
-    public var childrenHaveSameBackgroundColorAsContainer = false
-    public var estimatedSectionFooterHeight: CGFloat = 32
+    public var backgroundColor: UIColor                                   = .clear
+    public var layoutMarginsStyle: Row.LayoutMarginStyle                   = .`default`
+    public var childrenHaveSameBackgroundColorAsContainer                 = false
+    public var isUserInteractionEnabled: Bool                             = true
+    public var estimatedSectionFooterHeight: CGFloat                      = 32
+
     public var sectionFooterHeight: CGFloat = UITableViewAutomaticDimension {
         didSet {
             guard hasFixedHeight else { return }
@@ -136,10 +139,11 @@ public final class TableHeaderView: ElementContainer {
         return self.elementBlock()
     }()
     
-    public var backgroundColor: UIColor                         = .clear
-    public var layoutMarginsStyle: Row.LayoutMarginStyle        = .`default`
-    public var childrenHaveSameBackgroundColorAsContainer: Bool = false
-    
+    public var backgroundColor: UIColor                             = .clear
+    public var layoutMarginsStyle: Row.LayoutMarginStyle             = .`default`
+    public var childrenHaveSameBackgroundColorAsContainer: Bool     = false
+    public var isUserInteractionEnabled: Bool                       = true
+
     private let elementBlock: () -> ElementOfView
     
     public init(_ element: @autoclosure @escaping () -> ElementOfView) {
@@ -166,9 +170,10 @@ public final class StretchyHeader: ElementContainer {
         return self.elementBlock()
     }()
 
-    public var backgroundColor: UIColor                                = .clear
-    public var layoutMarginsStyle: Row.LayoutMarginStyle                = .zero
-    public var childrenHaveSameBackgroundColorAsContainer: Bool     	  = false
+    public var backgroundColor: UIColor                                 = .clear
+    public var layoutMarginsStyle: Row.LayoutMarginStyle                 = .zero
+    public var childrenHaveSameBackgroundColorAsContainer: Bool     	   = false
+    public var isUserInteractionEnabled: Bool                           = true
 
     /// The behavior of `StretchyHeader`.
     public enum StretchyBehavior {

@@ -14,6 +14,8 @@ public protocol ElementContainer {
     
     /// Background color of contentView (e.g. of UITableViewCell)
     var backgroundColor: UIColor { get }
+
+    var isUserInteractionEnabled: Bool { get }
     
     /// Layout margins.
     var layoutMarginsStyle: Row.LayoutMarginStyle { get }
@@ -56,5 +58,6 @@ extension ElementContainer {
         contentView.backgroundColor = self.backgroundColor
         contentView.preservesSuperviewLayoutMargins = false
         contentView.layoutMargins = self.layoutMarginsStyle.value
+        contentView.isUserInteractionEnabled = self.isUserInteractionEnabled
     }
 }

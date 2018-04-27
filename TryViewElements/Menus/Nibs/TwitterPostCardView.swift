@@ -11,7 +11,7 @@ import ViewElements
 
 // Icon made by http://www.flaticon.com/authors/madebyoliver Madebyoliver
 
-class TwitterPostCardView: BaseNibView, OptionalTypedPropsAccessible {
+final class TwitterPostCardView: BaseNibView, OptionalTypedPropsAccessible {
     
     typealias PropsType = TwitterPost
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!

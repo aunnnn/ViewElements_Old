@@ -19,6 +19,9 @@ public final class ElementOf<U: UIView>: ElementOfView, TypedPropsAccessible, Ty
     
     public let unTypedProps: Props
     public var stylesBlock: ((U) -> Void)?
+
+    /// This is like a reuseId for UITableViewCell. By default, view class (`U`) is used.
+    /// However, if you configure this element with `styles(...)`, it will be appended with random Id to make it unique.
     public var viewIdentifier: String {
         if let name = self.name { return name }
         if stylesBlock != nil {

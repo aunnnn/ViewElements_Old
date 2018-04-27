@@ -10,7 +10,7 @@ import ViewElements
 
 final class StretchyHeaderReloadExampleViewController: TableModelViewController {
     override func setupTable() {
-        let lb = ElementOfLabel(props: "Tap Reload").styles { (lb) in
+        let lb = ElementOfLabel(props: "Test if reload between different stretchy/table header types are working").styles { (lb) in
             lb.textAlignment = .center
             lb.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         }
@@ -18,19 +18,20 @@ final class StretchyHeaderReloadExampleViewController: TableModelViewController 
         let lbHeader = StretchyHeader(behavior: .shrinksToMinimumHeight(50), element: lb)
         lbHeader.backgroundColor = .yellow
 
-        let bttnRow = Row(ElementOfButtonWithAction(props: ("Reload blue", { [unowned self] in
+        let bttnRow = Row(ElementOfButtonWithAction(props: ("Reload to use stretchy with shrink mode", { [unowned self] in
             self.reloadBlueStretchyHeaderShrink100()
         })))
 
-        let bttnRow2 = Row(ElementOfButtonWithAction(props: ("Reload scrolls up mode", { [unowned self] in
+        let bttnRow2 = Row(ElementOfButtonWithAction(props: ("Reload to use stretchy with scrolls up mode", { [unowned self] in
             self.reloadGreenStretchyHeaderScrollsUp()
         })))
 
-        let bttnRow3 = Row(ElementOfButtonWithAction(props: ("Reload use table header view", { [unowned self] in
+        let bttnRow3 = Row(ElementOfButtonWithAction(props: ("Reload to use table header view", { [unowned self] in
             self.reloadUseTableHeaderView()
         })))
 
-        let mockRows = (0...10).map { return Row(ElementOfLabel(props: "Test Row \($0)")) }
+        let mockRows = (0...10).map { Row(ElementOfLabel(props: "Label \($0)")) }
+
         let s = Section(rows: [bttnRow, bttnRow2, bttnRow3] + mockRows)
         let table = Table(sections: [s])
         table.stretchyHeaderView = lbHeader

@@ -16,15 +16,22 @@ class TwitterFeedViewController: TableModelViewController {
             footer: nil,
             rowsBlock: {
                 let spc = RowOfEmptySpace(height: 22)
-                
-                let all = [getMockPostRow(),
-                           getMockPostRow(),
-                           spc,
-                           getMockPostRow(),
-                           getMockPostRow(),
-                           getMockPostRow(),
-                           getMockPostRow(),
-                           spc]
+
+                let guessHeightIntroLabel = Row(ElementOfLabel(props: "This example also demonstrates the use of `table.guessesSimilarHeightForCellsWithSameType`.\n\nSetting this to true will update estimated height for subsequent Rows to those (with same types) that are already on screen. This is quick and dirty way to alleviate the 'jumping scroll indicators problem' on the fully-AutoLayouted cells, *IFF you're confident that same type of cells will have similar heights*.").styles({ (lb) in
+                    lb.textColor = .blue
+                }))
+                guessHeightIntroLabel.layoutMarginsStyle = .all(inset: 10)
+
+                let all = [
+                    guessHeightIntroLabel,
+                    getMockPostRow(),
+                    getMockPostRow(),
+                    spc,
+                    getMockPostRow(),
+                    getMockPostRow(),
+                    getMockPostRow(),
+                    getMockPostRow(),
+                    spc]
                 all.forEach({ (r) in
                     r.layoutMarginsStyle = Row.LayoutMarginStyle.inset(top: 8, left: 12, bottom: 8, right: 8)
                     r.separatorStyle = .fullWidth

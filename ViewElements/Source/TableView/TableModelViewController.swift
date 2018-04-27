@@ -22,7 +22,8 @@ open class TableModelViewController: UIViewController {
     
     private var previousTableViewContentInset: UIEdgeInsets?
     private weak var previousActiveResponder: UIResponder?
-    private var latestViewWidth: CGFloat = 0.0
+
+    private var latestViewSizeThatTableHeaderViewUpdates: CGSize? = nil
 
     /// This is the internal view that moves with scroll view. It is only used for AutoLayout with StretchyHeaderView.
     private var tableViewTopMostLayoutGuideView: UIView?
@@ -127,11 +128,11 @@ open class TableModelViewController: UIViewController {
 
         // *If view width doesn't change, table header view shouldn't change*
         // Note: If we don't do this we'll call `layoutIfNeeded` below everytime we scroll!
-        let hasViewWidthChanged = latestViewWidth != self.view.bounds.width
-        if let headerView = tableView.tableHeaderView, hasViewWidthChanged {
+        let hasViewSizeChanged = latestViewSizeThatTableHeaderViewUpdates != view.bounds.size
+        if let headerView = tableView.tableHeaderView, hasViewSizeChanged {
 
             // Update
-            latestViewWidth = self.view.bounds.width
+            latestViewSizeThatTableHeaderViewUpdates = view.bounds.size
 
             let previousHeight = headerView.bounds.height
             headerView.layoutIfNeeded()
@@ -142,15 +143,12 @@ open class TableModelViewController: UIViewController {
         }
         
         if table.centersContentIfPossible {
-            self.centerTableView(with: self.view.bounds.size)
+            self.centerTableView(with: view.bounds.size)
         }
-
-        // update scroll indicator to use guessed heights
-        shouldUpdateTableHeight = table.guessesSimilarHeightForCellsWithSameType || shouldUpdateTableHeight
         
         if shouldUpdateTableHeight {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
     }
 
@@ -162,6 +160,12 @@ open class TableModelViewController: UIViewController {
 
             let stretchyHeight = stretchyHeaderView.bounds.height
             tableView.scrollIndicatorInsets = UIEdgeInsets(top: stretchyHeight, left: 0, bottom: 0, right: 0)
+        }
+    }
+
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if table.guessesSimilarHeightForCellsWithSameType {
+            tableView.reloadData()
         }
     }
     
@@ -289,7 +293,7 @@ extension TableModelViewController {
         hv.removeConstraints(hv.constraints)
         hv.removeFromSuperview()
         _tableHeaderView = nil
-        latestViewWidth = -1
+        latestViewSizeThatTableHeaderViewUpdates = nil
         tableView.tableHeaderView = nil
     }
 

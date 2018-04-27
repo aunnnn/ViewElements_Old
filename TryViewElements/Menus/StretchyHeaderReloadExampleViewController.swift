@@ -13,6 +13,8 @@ final class StretchyHeaderReloadExampleViewController: TableModelViewController 
         let lb = ElementOfLabel(props: "Test if reload between different stretchy/table header types are working").styles { (lb) in
             lb.textAlignment = .center
             lb.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+            lb.adjustsFontSizeToFitWidth = true
+            lb.minimumScaleFactor = 0.5
         }
 
         let lbHeader = StretchyHeader(behavior: .shrinksToMinimumHeight(50), element: lb)
@@ -61,7 +63,7 @@ final class StretchyHeaderReloadExampleViewController: TableModelViewController 
     }
 
     func reloadBlueStretchyHeaderShrink100() {
-        let lb = ElementOfLabel(props: "Reloaded!").styles { (lb) in
+        let lb = ElementOfLabel(props: "Reloaded! Note that this stretchy use fixed height by setting `restingHeight = 240`. By default (nil), restingHeight is calculated by AutoLayout.").styles { (lb) in
             lb.textAlignment = .center
             lb.font = UIFont.systemFont(ofSize: 36, weight: .heavy)
             lb.adjustsFontSizeToFitWidth = true

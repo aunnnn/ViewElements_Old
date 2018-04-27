@@ -57,7 +57,6 @@ final class StretchyHeaderExampleViewController: TableModelViewController {
             }
             sh.backgroundColor = .black
             sh.layoutMarginsStyle = .inset(top: 8, left: 16, bottom: 8, right: 16)
-            sh.restingHeight = 200
             return sh
         }()
         table.stretchyHeaderView = stretchyHeader

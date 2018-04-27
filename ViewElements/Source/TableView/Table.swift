@@ -186,12 +186,18 @@ public final class StretchyHeader: ElementContainer {
         /// E.g., you can set this height to 64 to simulate a navigation bar at the top.
         case shrinksToMinimumHeight(CGFloat)
     }
-    /// The default height that shows up first time and where table view rests. Default is 200.
-    ///
-    /// **Important**: If `stretchyBehavior` is `shrinksToMinimumHeight(minHeight: CGFloat)`, `restingHeight` must be more than `minHeight`.
-    public var restingHeight: CGFloat                                  = 200.0 {
+    /**
+     The default height that shows up first time (and where table view 'rests').
+     Specify a number here if you want the stretchy header to have some rest initial state height.
+
+     Default is `nil`, which use `systemLayoutSizeFitting` to get the exactly fitted height (which is might not what you need).
+
+     **Important**: If `stretchyBehavior` is `shrinksToMinimumHeight(minHeight: CGFloat)`, `restingHeight` must be more than `minHeight`.
+     */
+    public var restingHeight: CGFloat?                                  = nil {
         didSet {
-            if case let .shrinksToMinimumHeight(minHeight) = stretchyBehavior,
+            if let restingHeight = restingHeight,
+                case let .shrinksToMinimumHeight(minHeight) = stretchyBehavior,
                 minHeight > restingHeight {
                 assertionFailure("The height in `shrinksToMinimumHeight(CGFloat)` must be less than or equal `restingHeight`.")
             }

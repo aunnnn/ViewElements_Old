@@ -141,7 +141,7 @@ open class TableModelViewController: UIViewController {
             // update table header view's height
             shouldUpdateTableHeight = previousHeight != newHeight || shouldUpdateTableHeight
         }
-        
+
         if table.centersContentIfPossible {
             self.centerTableView(with: view.bounds.size)
         }
@@ -344,25 +344,6 @@ extension TableModelViewController {
             return
         }
 
-        let guideView: UIView
-        do {
-            let gv = UIView()
-            gv.translatesAutoresizingMaskIntoConstraints = false
-            gv.isUserInteractionEnabled = false
-
-            self.view.insertSubview(gv, belowSubview: tableView)
-            gv.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-            gv.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
-            gv.heightAnchor.constraint(equalToConstant: 0).isActive = true
-
-            tableViewTopMostLayoutGuideViewTopConstraint = gv.topAnchor.constraint(equalTo: self.view.topAnchor)
-            tableViewTopMostLayoutGuideViewTopConstraint?.constant = stretchyHeader.restingHeight
-            tableViewTopMostLayoutGuideViewTopConstraint?.isActive = true
-            self.tableViewTopMostLayoutGuideView = gv
-
-            guideView = gv
-        }
-
         let stretchyHeaderView: UIView
         do {
             let headerView = stretchyHeader.element.build()
@@ -392,13 +373,54 @@ extension TableModelViewController {
         hv.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         hv.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
 
+        let restingHeight: CGFloat
+        if let rh = stretchyHeader.restingHeight {
+            restingHeight = rh
+        } else {
+            /*
+             If not provided, we use dynamic resting height calculation.
+
+             FIXME: Honestly I don't know why this works.
+
+             Ideally we should call `reloadStretchyHeaderViewIfNeeded`
+             in `viewDidLayoutSubviews()` everytime (optimized by cached size check)
+             to be sure that the `view.bounds.width` is CORRECT before attempting to use `systemLayoutSizeFitting`.
+
+             But somehow this method always have the correct view.bounds.width value.
+             Maybe it's wrong when this view controller is a child controller with some custom size?
+             */
+            var fittedSize = UILayoutFittingCompressedSize
+            fittedSize.width = view.bounds.width
+            let fittedHeight = hv.systemLayoutSizeFitting(fittedSize).height
+            restingHeight = fittedHeight
+        }
+
+        let guideView: UIView
+        do {
+            let gv = UIView()
+            gv.translatesAutoresizingMaskIntoConstraints = false
+            gv.isUserInteractionEnabled = false
+
+            self.view.insertSubview(gv, belowSubview: tableView)
+            gv.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+            gv.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+            gv.heightAnchor.constraint(equalToConstant: 0).isActive = true
+
+            tableViewTopMostLayoutGuideViewTopConstraint = gv.topAnchor.constraint(equalTo: self.view.topAnchor)
+            tableViewTopMostLayoutGuideViewTopConstraint?.constant = restingHeight
+            tableViewTopMostLayoutGuideViewTopConstraint?.isActive = true
+            self.tableViewTopMostLayoutGuideView = gv
+
+            guideView = gv
+        }
+
         let stretchyBottomAnchorGuide = guideView.topAnchor
 
         switch stretchyHeader.stretchyBehavior {
         case .scrollsUpWithContent:
 
             /* Default minimum height */
-            let heightAnchor = hv.heightAnchor.constraint(equalToConstant: stretchyHeader.restingHeight)
+            let heightAnchor = hv.heightAnchor.constraint(equalToConstant: restingHeight)
             heightAnchor.priority = UILayoutPriority(999)
             heightAnchor.isActive = true
 
@@ -432,13 +454,13 @@ extension TableModelViewController {
             bottomToTableAnchor.isActive = true
         }
 
-        self.tableView.contentInset = .init(top: stretchyHeader.restingHeight, left: 0, bottom: 0, right: 0)
+        self.tableView.contentInset = .init(top: restingHeight, left: 0, bottom: 0, right: 0)
         if !stretchyHeader.adjustsTableViewScrollIndicatorInsetsBelowStretchyHeaderView {
             self.tableView.scrollIndicatorInsets = .zero
         } else {
-            self.tableView.scrollIndicatorInsets = .init(top: stretchyHeader.restingHeight, left: 0, bottom: 0, right: 0)
+            self.tableView.scrollIndicatorInsets = .init(top: restingHeight, left: 0, bottom: 0, right: 0)
         }
-        self.tableView.setContentOffset(.init(x: 0, y: -stretchyHeader.restingHeight), animated: false)
+        self.tableView.setContentOffset(.init(x: 0, y: -restingHeight), animated: false)
     }
     
     public func isSectionHeaderFloating(section: Int) -> Bool {

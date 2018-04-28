@@ -47,12 +47,13 @@ class ViewController: TableModelViewController {
 ````
 
 ## Features
-- Setup a view once, use everywhere :tada: as:
-  - Row (UITableViewCell)
-  - SectionHeader, SectionFooter (UITableHeaderFooterView)
-  - tableHeaderView
-- Built-in keyboard avoiding
-- Solve these common problems for you:
+- Supported view types:
+  - Row (`UITableViewCell`)
+  - SectionHeader, SectionFooter (`UITableHeaderFooterView`)
+  - TableHeaderView
+  - StretchyHeader :sparkles:
+- Keyboard avoiding
+- Also handles these easily:
   - Hide trailing separator (by default)
   - Separator styles
   - AutoLayout (If you create a custom view, you must setup the autolayout yourself correctly though)
@@ -66,7 +67,14 @@ pod 'ViewElements'
 ````
 
 ## Overview
-Most UIs in iOS can be solved by UITableView. This framework abstracts various types of views into an easy-to-use view models like Row, SectionHeader, SectionFooter, which you can compose them to get a UITableView up real fast.
+All iOS apps use `UITableView`, but it's quite a hassle to set that up everytime. 
+This framework does the heavy lifting for you.
+It abstracts views into view models like Row, SectionHeader, SectionFooter. You can compose the model to make a table.
+Want to change rows order? Just change the order in the array. Want 10 label rows?:
+```swift
+let rows = (0..<10).map { Row(ElementOfLabel("Label no. \($0)")) }
+```
+Manipulate them like a primitive data!
 
 ### Element
 ViewElement provides a universal abstraction for a UIView, **Element**. Element contains **Props**, a data structure used to configure that view.

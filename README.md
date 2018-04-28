@@ -5,6 +5,8 @@
 
 A framework to manage and reuse UIViews in iOS apps.
 
+*IMPORTANT: This is still a work in progress. Can be used in production but with care.*
+
 ## Features
 - Supported view types:
   - Row (`UITableViewCell`)
@@ -35,14 +37,16 @@ let rows = (0..<10).map { Row(ElementOfLabel("Label no. \($0)")) }
 ```
 Manipulate them like a primitive data!
 
-## Brief Tour
-### Creating a simple table
+## Usecases
+### 1. Creating a basic table
 
 1. Make `ElementOf<SomeViewClass>`:
 ```swift
 let el = ElementOf<Label>(props: "Yay!") // = a general view
 ```
-Note: `Label` is a subclass of `UILabel` that works with this framework. [How to make your own](#how-to-make-a-custom-view).
+Note1: `Label` is a subclass of `UILabel` that works with this framework. [How to make your own](#how-to-make-a-custom-view).
+Note2: You can use `ElementOfLabel(props: "Yay!")` instead which wrap the above code. See [built-in elements] (#built-in-elements).
+
 
 2. Wrap it with `Row`:
 ```swift
@@ -88,9 +92,51 @@ class MyViewController: TableModelViewController {
 }
 ```
 
+### 2. Fetching data from API
+You can easily show loading indicator when 
+
 
 ## How to make a custom view
-// TBD
+To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`.
+
+
+### Built-in Elements
+These are default elements that ship with this framework, wrapped in a creator function, such as:
+```swift
+public func ElementOfLabel(props: String) -> ElementOf<Label> {
+    return ElementOf<Label>.init(props: props)
+}
+```
+With them you can get started quickly. These are the complete list of built-in elements:
+- `ElementOfLabel(props: String)`
+- `ElementOfTextField(props: (text: String?, placeholder: String?))`
+- `ElementOfImageView(props: UIImage)`
+- `ElementOfButtonWithAction(props: (buttonTitle: String, handler: () -> Void))`
+- `ElementOfActivityIndicator(props: Bool)` // Bool is animating or not
+- `FlexibleSpace() // or ElementOf<EmptyView>(props: ())` <-- just an empty view made to control dummy spacing
+
+There is only one built-in `Row`:
+```swift
+func RowOfEmptySpace(height: CGFloat) -> Row
+```
+This is convenience when you want to add an empty space `Row`.
+
+#### Customizing Built-in Elements
+These built-in elements are very bland by default (e.g., it's just a default `UILabel()`). You can `styles` them up:
+```swift
+let el = ElementOfLabel(props: "Yay!").styles { lb in
+  lb.font = ...
+  lb.textColor = .red
+  lb.textAlignment = .center
+  lb.numberOfLines = 1 // **by default it's 0**
+}
+```
+
+#### Suggest for improvements? Open an issue!
+These choice of built-in elements and props are far from perfect. You can create a issue if you want to improve, e.g., which kind of props we should support. As an example, I think `ElementOfButtonWithAction(props: (buttonTitle: String, handler: () -> Void))` is quite ugly...
+
+#### Customizing Built-in elements
+
 
 ## Terminologies
 ### Element
@@ -106,41 +152,46 @@ Then, an element can be used in a table view by wrapping it with ElementContaine
 
 Most containers use AutoLayout by default. But you can set rowHeight on these containers if you know the height beforehand.
 
-### Component
-Row of Element fills the cell horizontally, what if you need to place two elements next to each other?
+### Component (Experimental)
+Component allows you to make complex view by composing other elements. The framework do this by heavily relying on `UIStackViews` nesting together. This is very experimental feature.
+Beware that internally it creates UIStackView for each StackProps and nests them together.
 
-You can stack elements horizontally with **Component**, a subclass of Element. It can be used everywhere that Element can be used. 
-A component requires you to return an hierarchy of **StackProps**-- an abstraction for UIStackView.
+Unlike `ElementOf<SomeViewClass>`, you make a `Component` by subclassing `ComponentOf<SomeProps>`.
 
-Internally it creates UIStackView for each StackProps and nests them together.
-
-PS: Though stack view solves a lot of AutoLayout problems, consider making element from nib file if a component is very complex.
-
-PS2: *Right now Component doesn't support changes in views tree like in React. 
-Component only serves as a way to compose elements by nesting them together.*
+For example, to make a component with image view and label aligned horizontally:
+```
+class ImageWithLabelComponent: ComponentOf<(img: UIImage, title: String)> {
+  override func shouldElementUpdate(oldProps: (UIImage, String), newProps: (UIImage String)) -> Bool {
+    return oldProps.title != newProps.title
+  }
+  
+  override func render() -> StackProps {
+    let imgElement= ElementOfImageView(props: props.img)
+    let lbElement = ElementOfLabel(props: props.title)
+    return HorizontalStack(
+            distribute: .equalSpacing,
+            align: .center,
+            spacing: 20,
+            [imgElement, lbElement]) // composing them with stack view
+  }
+}
+```
+**IMPORTANT:** In `override func render() -> StackProps `, it looks like you can do what React does, returning arbitrary elements based on props state. However, this framework actually clears the `UIView` and rebuild them. So it's not really performant!
 
 ## Limitations
-This framework is (at the moment) suitable for creating static pages, e.g. no states/interactions on the content.
-At the end of the day it's just a UITableView.
+This framework is (at the moment) suitable for creating static pages, e.g. not much animations/interactions on the content.
+At the end of the day it's just a `UITableView`.
 For highly interactive page with many gestures, consider other options.
 
 ## Roadmap
-1. I'm working on combining this with RxSwift, which allows us to use ViewElements on creating data-driven pages (e.g., any kinds of input forms, with reactivity). The idea is to use Rx setup block in propsType, instead of a fixed, stateful variable like String. For example (Reactive<RxLabel>) -> [Disposable].   
-2. Support UICollectionView
+1. I'm thinking on combining this with RxSwift, which allows us to use ViewElements on creating data-driven pages (e.g., any kinds of input forms, with reactivity). The idea is to use Rx setup block in propsType, instead of a fixed, stateful variable like String. For example (Reactive<RxLabel>) -> [Disposable]. 
   
-Then you can setup all your Rx things there at the element creation time. You have to implement RxLabel yourself though, and manage the DisposeBag there.
-
-## Getting Started
-
-### 1. Create a view to use with this framework
-- Make a UIView nib that subclasses BaseNibView (for programmatically-created UIView, subclass BaseView)
-- Define *PropsType*
-- Implements setup/update functions
-
-(...in progress, for now, see Examples first)
+  **Probably in a separated module. Don't what this to bloat further than this.**
+  
+2. Support UICollectionView. Probably will support only simple horizontal collection view (in a separated library), which is pretty common use-cases.
 
 ## Examples
-See 'ViewElements/Examples'.
+See 'ViewElements/Examples'. It's not polished though, more like a playground for myself while developing this framework (sry lol).
 
 ## Alternatives
 You could look into these instead, probably more elegant that this framework lol:

@@ -199,7 +199,7 @@ Beware that internally it creates UIStackView for each StackProps and nests them
 Unlike `ElementOf<SomeViewClass>`, you make a `Component` by subclassing `ComponentOf<SomeProps>`.
 
 For example, to make a component with image view and label aligned horizontally:
-```
+```swift
 class ImageWithLabelComponent: ComponentOf<(img: UIImage, title: String)> {
   override func shouldElementUpdate(oldProps: (UIImage, String), newProps: (UIImage String)) -> Bool {
     return oldProps.title != newProps.title

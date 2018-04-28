@@ -5,47 +5,6 @@
 
 A framework to manage and reuse UIViews in iOS apps.
 
-````swift
-
-// 0. Subclass TableModelViewController
-class ViewController: TableModelViewController {
-
-  override func setup() {
-  
-    // 1. Create a Row, this is a built-in label element, support multiple lines by default
-    let titleRow = Row(ElementOfLabel(props: "Hello!"))
-
-    // 2. You can customize
-    let messageRow = Row(ElementOfLabel(props: "This is awesome").styles({ (lb) in
-        lb.textColor = .black
-        lb.font = UIFont.systemFont(ofSize: 12)
-        lb.textAlignment = .center
-        lb.numberOfLines = 1
-    }))
-    messageRow.backgroundColor = .gray
-    messageRow.layoutMarginStyle = .each(vertical: 4, horizontal: 12)
-    messageRow.rowHeight = 44
-        
-    // 3. For a custom element, you will need to declare type of props in MyCustomView, it can be anything, like a tuple.
-    let customProps = ("Wow", "This", "Is so flexible!")
-    let customRow = Row(ElementOf<MyCustomView>(props: customProps))
-    ...
-
-    // 4. To create a section header
-    let header = SectionHeader(ElementOfLabel(props: "Easy header"))
-
-    // 5. Building up Section
-    let section = Section(header: header, footer: nil, rows: [titleRow, messageRow, ...])
-
-    // 6. Building up Table
-    let table = Table(sections: [section]])
-
-    // 7. Then it works from this moment on!
-    self.table = table
-  }
-}
-````
-
 ## Features
 - Supported view types:
   - Row (`UITableViewCell`)
@@ -76,6 +35,64 @@ let rows = (0..<10).map { Row(ElementOfLabel("Label no. \($0)")) }
 ```
 Manipulate them like a primitive data!
 
+## Brief Tour
+### Creating a simple table
+
+1. Make `ElementOf<SomeViewClass>`:
+```swift
+let el = ElementOf<Label>(props: "Yay!") // = a general view
+```
+Note: `Label` is a subclass of `UILabel` that works with this framework. [How to make your own](#how-to-make-a-custom-view).
+
+2. Wrap it with `Row`:
+```swift
+let labelRow = Row(el) // = a table view cell
+```
+
+3. Make a section from array of `Row`:
+```swift
+let s = Section(row: [labelRow, ...]) // = a section in table view
+```
+
+4. Make a table from array of `Section`:
+```swift
+let table = Table(sections: [s, ...]) // = a table view
+```
+You already got a complete model to present a table, next you just have to put it to the view controller that knows how to interpret this model.
+
+5. Subclass `TableModelViewController`, this is the most important class in this framework. It knows how to parse a `Table` model into final result. You can override `setupTable()` and set a table there (you can also do it in `viewDidLoad`):
+```swift
+class MyViewController: TableModelViewController {
+
+  /// Initial table
+  override setupTable() {
+    // Build a Table instance like above steps.
+    let table = ...   
+    
+    // Set a table model
+    self.table = table
+  }
+}
+```
+And that's it, you've got a view controller ready to use!
+
+6. You can set the table model anytime, just make sure to call `reload()`:
+```swift
+class MyViewController: TableModelViewController {
+  ...
+  
+  func reloadTable() {
+    self.table = getTableModel() // build some table model from state
+    self.reload() // reload the whole table
+  }
+}
+```
+
+
+## How to make a custom view
+// TBD
+
+## Terminologies
 ### Element
 ViewElement provides a universal abstraction for a UIView, **Element**. Element contains **Props**, a data structure used to configure that view.
 This framework already provides basic UIKit elements like UILabel, UIImageView, UIButton, UITextField, UIAcivityIndicator.

@@ -38,19 +38,27 @@ let rows = (0..<10).map { Row(ElementOfLabel("Label no. \($0)")) }
 Manipulate them like a primitive data!
 
 ## Usecases
-### 1. Creating a basic table
+### Creating a basic table
 
 1. Make `ElementOf<SomeViewClass>`:
 ```swift
 let el = ElementOf<Label>(props: "Yay!") // = a general view
 ```
 Note1: `Label` is a subclass of `UILabel` that works with this framework. [How to make your own](#how-to-make-a-custom-view).
-Note2: You can use `ElementOfLabel(props: "Yay!")` instead which wrap the above code. See [built-in elements] (#built-in-elements).
+
+Note2: You can use `ElementOfLabel(props: "Yay!")` instead which wrap the above code. See [built-in elements](#built-in-elements).
 
 
 2. Wrap it with `Row`:
 ```swift
 let labelRow = Row(el) // = a table view cell
+```
+You can also customize `Row` properties:
+```swift
+labelRow.backgroundColor = .gray
+labelRow.separatorStyle = .none
+labelRow.rowHeight = 60 // fixed height, instead of AutoLayout
+labelRow.layoutMarginStyle = .all(inset: 8)
 ```
 
 3. Make a section from array of `Row`:
@@ -92,13 +100,48 @@ class MyViewController: TableModelViewController {
 }
 ```
 
-### 2. Fetching data from API
-You can easily show loading indicator when 
-
+### Fetching data from API
+You can easily show a loading indicator for a section while waiting for remote data using `ElementOfActivityIndicator(props: true)`. 
+I suggest breaking parts of the table into functions that return element based on app states:
+```swift
+func listOfUsersSection() -> Section {
+  guard let users = self.usersList else { 
+    return Section(rows: [Row(ElementOfActivityIndicator(props: true))]) // show loading if no data
+  }
+  let userRows = users.map { u in
+    return Row(ElementOf<UserView>(props: user))
+  }
+  return Section(rows: userRows)
+}
+```
 
 ## How to make a custom view
-To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`.
+To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`. **Be sure to use the same class name as the nib file.** The framework automatically figures out how to load between different kinds of views:
 
+```swift
+
+/// IMPORTANT: Must be same name as nib file (SomeView.xib).
+public final class SomeView: BaseNibView, OptionalTypedPropsAccessible {
+
+  /// Better use struct instead of tuple if it gets complicated!
+  public typealias PropsType = (title: String, image: UIImage)
+
+  @IBOutlet weak var label: UILabel!
+  @IBOutlet weak var imageView: UIImageView!
+
+  /// Initial setup, equivalent to `awakeFromNib`
+  public override func setup() {
+    self.label.textAlignment = .center
+  }
+
+  /// Update view based on props
+  public override func update() {
+    self.label.text = self.props?.title
+    self.imageView.image = self.props?.image
+  }
+ }
+
+```
 
 ### Built-in Elements
 These are default elements that ship with this framework, wrapped in a creator function, such as:
@@ -134,9 +177,6 @@ let el = ElementOfLabel(props: "Yay!").styles { lb in
 
 #### Suggest for improvements? Open an issue!
 These choice of built-in elements and props are far from perfect. You can create a issue if you want to improve, e.g., which kind of props we should support. As an example, I think `ElementOfButtonWithAction(props: (buttonTitle: String, handler: () -> Void))` is quite ugly...
-
-#### Customizing Built-in elements
-
 
 ## Terminologies
 ### Element

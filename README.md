@@ -45,6 +45,7 @@ pod 'ViewElements'
  - [Terminologies](#terminologies)
   - [Element](#element)
   - [Component](#component)
+ - [Known Issues](#known-issues)
  - [Limitations](#limitations)
  - [Roadmap](#roadmap)
 
@@ -355,6 +356,11 @@ class ImageWithLabelComponent: ComponentOf<(img: UIImage, title: String)> {
 }
 ```
 **IMPORTANT:** In `override func render() -> StackProps `, it looks like you can do what React does, returning arbitrary elements based on props state. However, this framework actually clears the `UIView` and rebuild them. So it's not really performant!
+
+## Known Issues
+These are issues I don't know how to fix yet:
+- Stretchy header with first hanging section header
+  - Because the (first) section header **strickly** respects `tableView.contentInset` to know where it should stick, when the stretchy header shrinks or moves up, it lefts the empty gap between them.
 
 ## Limitations
 This framework is (at the moment) suitable for creating static pages, e.g. not much animations/interactions on the content.

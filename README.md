@@ -28,6 +28,22 @@ Add this to your Podfile:
 pod 'ViewElements'
 ````
 
+## Table of Contents
+- [Overview](#overview)
+- [Usecases](#usecases)
+  - [Creating a basic table](#creating-a-basic-table)
+  - [Section Header and Footer](#section-header-and-footer)
+  - [Table Header View](#table-header-view)
+  - [Stretchy Header](#stretchy-header)
+  - [Fetching data from API](#fetching-data-from-api)
+  - [Tail loading](#tail-loading)
+ - [How to make a custom view](#how-to-make-a-custom-view)
+ - [Built-in Elements](#built-in-elements)
+ - [Terminologies](#terminologies)
+  - [Element](#element)
+  - [Component](#component)
+ - [Limitations](#limitations)
+
 ## Overview
 All iOS apps use `UITableView`, but it's quite a hassle to set that up everytime. 
 This framework does the heavy lifting for you.
@@ -39,6 +55,7 @@ let rows = (0..<10).map { Row(ElementOfLabel("Label no. \($0)")) }
 Manipulate them like a primitive data!
 
 ## Usecases
+
 ### Creating a basic table
 
 1. Make `ElementOf<SomeViewClass>`:
@@ -100,6 +117,43 @@ class MyViewController: TableModelViewController {
   }
 }
 ```
+### Section Header and Footer
+1. Wrap an element with `SectionHeader` or `SectionFooter`:
+```swift
+let sh = SectionHeader(ElementOfLabel(props: "Section header"))
+let sf = SectionHeader(ElementOfLabel(props: "Section footer"))
+```
+2. Set it to `Section`:
+```swift
+let s = Section(rows: rows)
+s.header = sh
+s.footer = sf
+```
+
+### Table Header View
+1. Wrap an element with `TableHeaderView`:
+```swift
+let th = TableHeaderView(ElementOfLabel(props: "Table header view"))
+```
+2. Set it to `Table`:
+```swift
+let table = Table(sections: sections)
+table.tableHeaderView = th
+```
+
+### Stretchy Header
+1. Wrap an element with `StretchyHeader`, two modes are supported:
+```swift
+// Mode 1: Scrolls up with content
+let sh1 = StretchyHeader(behavior: .scrollsUpWithContent, element: ElementOfLabel(props: "stretchy header"))
+sh1.restingHeight = nil // By default (nil) it uses AutoLayout to determine fitted size.
+sh1.restingHeight = 200 // But you can give it fixed height here.
+
+// Mode 2: Shrink and then stick at the top
+let sh2 = StretchyHeader(behavior: .shrinksToMinimumHeight(60), element: ElementOfLabel(props: "stretchy header"))
+sh.restingHeight = 200 // Initial height is 200, it then reduces as it scrolls up, and then stop at 60
+```
+**IMPORTANT:** `StretchyHeader` can't be used together with `TableHeaderView`. Setting one automatically sets another to `nil`
 
 ### Fetching data from API
 You can easily show a loading indicator for a section while waiting for remote data using `ElementOfActivityIndicator(props: true)`. 
@@ -113,6 +167,76 @@ func listOfUsersSection() -> Section {
     return Row(ElementOf<UserView>(props: user))
   }
   return Section(rows: userRows)
+}
+```
+
+If you don't want to show anything, you can simply return `nil`:
+```swift
+func listOfUsersSection() -> Section? {
+  guard let users = self.usersList else { 
+    return nil
+  }
+  let userRows = users.map { u in
+    return Row(ElementOf<UserView>(props: user))
+  }
+  return Section(rows: userRows)
+}
+```
+Then figure out whether to show or not:
+```swift
+let allPossibleSections: [Section?] = [
+  someSection(),
+  listOfUsesSection(),
+  someOtherSection(),
+  ...
+]
+
+let visibleSections: [Section] = allPossibleSections.compactMap { $0 } // filter out nil section
+```
+### Tail Loading
+1. Add a loading section at the end:
+```swift
+override func setupTable() {
+  let loadingSection = Section(rows: [{
+    let row = Row(ElementOfActivityIndicator())
+    row.rowHeight = 44
+    row.tag = "loading" // give a tag, so it can be referenced easily later
+    return row
+   }()])
+  let table = Table(sections: [
+    someListOfThingsSection(),
+    loadingSection
+  ])
+  self.table = table
+}
+```
+2. Override `func tableModelViewControllerWillDisplay(row: Row, at indexPath: IndexPath)`, which is called whenever a row will be displayed:
+```swift
+// Keep track of isLoading, so that we don't call API everytime this row enters the screen!
+var isLoading = false
+
+// Do anything you want here
+var fromId: Int = 0
+let kPaginationSize = 100
+
+override func tableModelViewControllerWillDisplay(row: Row, at indexPath: IndexPath) {
+  if row.tag == "loading" && !isLoading {
+    self.isLoading = true // start loading
+    APIService.fetchPaginationData(from: self.fromId, size: self.kPaginationSize) { [weak self] data in
+      guard let `self` = self else { return }
+      
+      // Dirty check if loading is there or not by counting lol
+      if data.isEmpty && self.table.sections.count == 2 {
+        // Remove loading section as we run out of data
+        self.table.sections.removeLast()
+      }
+    
+      // You can build an entirely new Table, but I will just mutate and reload here, dirty but work
+      self.table.sections[0].rows.append(contentsOf: rowsFromData(data))
+      self.tableView.reloadData()
+      self.isLoading = false // end loading     
+    }
+  }
 }
 ```
 
@@ -140,11 +264,11 @@ public final class SomeView: BaseNibView, OptionalTypedPropsAccessible {
     self.label.text = self.props?.title
     self.imageView.image = self.props?.image
   }
- }
+}
 
 ```
 
-### Built-in Elements
+## Built-in Elements
 These are default elements that ship with this framework, wrapped in a creator function, such as:
 ```swift
 public func ElementOfLabel(props: String) -> ElementOf<Label> {
@@ -193,7 +317,8 @@ Then, an element can be used in a table view by wrapping it with ElementContaine
 
 Most containers use AutoLayout by default. But you can set rowHeight on these containers if you know the height beforehand.
 
-### Component (Experimental)
+### Component
+*Note: This is still an experimental feature.*
 Component allows you to make complex view by composing other elements. The framework do this by heavily relying on `UIStackViews` nesting together. This is very experimental feature.
 Beware that internally it creates UIStackView for each StackProps and nests them together.
 

@@ -41,6 +41,7 @@ pod 'ViewElements'
  - [How to make a custom view](#how-to-make-a-custom-view)
  - [Built-in Elements](#built-in-elements)
   - [Customizing Built-in Elements](#customizing-built-in-elements)
+ - [Difference between `reload()` and `tableView.reloadData()`](#difference-between-reload-and-tableviewreloaddata)
  - [Terminologies](#terminologies)
   - [Element](#element)
   - [Component](#component)

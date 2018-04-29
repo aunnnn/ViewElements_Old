@@ -29,6 +29,7 @@ pod 'ViewElements'
 ````
 
 ## Table of Contents
+- [Installation](#installation)
 - [Overview](#overview)
 - [Usecases](#usecases)
   - [Creating a basic table](#creating-a-basic-table)
@@ -39,10 +40,12 @@ pod 'ViewElements'
   - [Tail loading](#tail-loading)
  - [How to make a custom view](#how-to-make-a-custom-view)
  - [Built-in Elements](#built-in-elements)
+  - [Customizing Built-in Elements](#customizing-built-in-elements)
  - [Terminologies](#terminologies)
   - [Element](#element)
   - [Component](#component)
  - [Limitations](#limitations)
+ - [Roadmap](#roadmap)
 
 ## Overview
 All iOS apps use `UITableView`, but it's quite a hassle to set that up everytime. 
@@ -205,7 +208,7 @@ override func setupTable() {
    }()])
   let table = Table(sections: [
     someListOfThingsSection(),
-    loadingSection
+    loadingSection // loading at the bottom
   ])
   self.table = table
 }
@@ -215,7 +218,7 @@ override func setupTable() {
 // Keep track of isLoading, so that we don't call API everytime this row enters the screen!
 var isLoading = false
 
-// Do anything you want here
+// Pagination states
 var fromId: Int = 0
 let kPaginationSize = 100
 
@@ -226,19 +229,26 @@ override func tableModelViewControllerWillDisplay(row: Row, at indexPath: IndexP
       guard let `self` = self else { return }
       
       // Dirty check if loading is there or not by counting lol
-      if data.isEmpty && self.table.sections.count == 2 {
-        // Remove loading section as we run out of data
-        self.table.sections.removeLast()
+      if data.isEmpty {
+        if self.table.sections.count == 2 {
+          // Remove loading section as we run out of data
+          self.table.sections.removeLast()
+        }
+      } else {
+        // You can build an entirely new Table, but I will just mutate and reload here, dirty but work
+        self.table.sections[0].rows.append(contentsOf: rowsFromData(data))
       }
-    
-      // You can build an entirely new Table, but I will just mutate and reload here, dirty but work
-      self.table.sections[0].rows.append(contentsOf: rowsFromData(data))
       self.tableView.reloadData()
       self.isLoading = false // end loading     
     }
   }
 }
 ```
+
+## Difference between `reload()` and `tableView.reloadData()`
+The only difference is that `reload()` will also reload `TableHeaderView` and `StretchyHeader`. One downside of this is that the `contentOffset` and `contentInsets` will be reset to zero.
+
+Calling `tableView.reloadData()` will reload all rows and sections (but not `TableHeaderView` and `StretchyHeader`), which might be just what you want. For example, in [tail loading](#tail-loading), you should call `tableView.reloadData()` only so that the incoming data is reload correctly at the tail. If you call `reload()`, the `tableView` jumps to the top.
 
 ## How to make a custom view
 To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`. **Be sure to use the same class name as the nib file.** The framework automatically figures out how to load between different kinds of views:
@@ -289,7 +299,7 @@ func RowOfEmptySpace(height: CGFloat) -> Row
 ```
 This is convenience when you want to add an empty space `Row`.
 
-#### Customizing Built-in Elements
+### Customizing Built-in Elements
 These built-in elements are very bland by default (e.g., it's just a default `UILabel()`). You can `styles` them up:
 ```swift
 let el = ElementOfLabel(props: "Yay!").styles { lb in
@@ -300,7 +310,7 @@ let el = ElementOfLabel(props: "Yay!").styles { lb in
 }
 ```
 
-#### Suggest for improvements? Open an issue!
+### Suggest for improvements? Open an issue!
 These choice of built-in elements and props are far from perfect. You can create a issue if you want to improve, e.g., which kind of props we should support. As an example, I think `ElementOfButtonWithAction(props: (buttonTitle: String, handler: () -> Void))` is quite ugly...
 
 ## Terminologies
@@ -313,7 +323,8 @@ Then, an element can be used in a table view by wrapping it with ElementContaine
 - Row(element)
 - SectionHeader(element)
 - SectionFooter(element)
-- TableHeaderView(element).
+- TableHeaderView(element)
+- StretchyHeader(element)
 
 Most containers use AutoLayout by default. But you can set rowHeight on these containers if you know the height beforehand.
 

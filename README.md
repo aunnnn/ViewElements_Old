@@ -109,19 +109,21 @@ class MyViewController: TableModelViewController {
   }
 }
 ```
-And that's it, you've got a view controller ready to use!
+**And that's it!** Creating a table view is never this easy :tada:
 
-6. You can set the table model anytime, just make sure to call `reload()`:
+6. (Optional) You can set the table model anytime, just make sure to call `reload()` or `tableView.reloadData()`:
 ```swift
 class MyViewController: TableModelViewController {
   ...
   
   func reloadTable() {
     self.table = getTableModel() // build some table model from state
-    self.reload() // reload the whole table
+    self.reload() // or self.tableView.reloadData()
   }
 }
 ```
+Please see the [difference between them](#difference-between-reload-and-tableviewreloaddata).
+
 ### Section Header and Footer
 1. Wrap an element with `SectionHeader` or `SectionFooter`:
 ```swift

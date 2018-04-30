@@ -31,7 +31,8 @@ deploy:
     branch: release
 
 script:
-  - xcodebuild -destination 'platform=iOS Simulator,name=iPhone 5s,OS=11.3' -project ViewElements.xcodeproj -scheme ViewElements test
+  - set -o pipefail
+  - xcodebuild -destination 'platform=iOS Simulator,name=iPhone 5s,OS=11.3' -project ViewElements.xcodeproj -scheme ViewElements test | xcpretty
 
 notifications:
   email:

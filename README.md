@@ -255,20 +255,19 @@ The only difference is that `reload()` will also reload `TableHeaderView` and `S
 Calling `tableView.reloadData()` will reload all rows and sections (but not `TableHeaderView` and `StretchyHeader`), which might be just what you want. For example, in [tail loading](#tail-loading), you should call `tableView.reloadData()` only so that the incoming data is reload correctly at the tail. If you call `reload()`, the `tableView` jumps to the top.
 
 ## How to make a custom view
-To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`. **Be sure to use the same class name as the nib file.** The framework automatically figures out how to load between different kinds of views:
+To be able to use `ElementOf<ViewClass>`, `ViewClass` must conform to `BaseView` (or `BaseNibView` if you use nib file), **AND** `OptionalPropsTypeAccessible`. 
+
+If you use `BaseNibView`, **be sure to use the same class name as the nib file.** The framework automatically figures out how to load corresponding types of views:
 
 ```swift
-
-/// IMPORTANT: Must be same name as nib file (SomeView.xib).
+/// IMPORTANT: It will automatically loads `SomeView.xib`
 public final class SomeView: BaseNibView, OptionalTypedPropsAccessible {
 
-  /// Better use struct instead of tuple if it gets complicated!
   public typealias PropsType = (title: String, image: UIImage)
 
   @IBOutlet weak var label: UILabel!
   @IBOutlet weak var imageView: UIImageView!
 
-  /// Initial setup, equivalent to `awakeFromNib`
   public override func setup() {
     self.label.textAlignment = .center
   }
@@ -283,13 +282,13 @@ public final class SomeView: BaseNibView, OptionalTypedPropsAccessible {
 ```
 
 ## Built-in Elements
-These are default elements that ship with this framework, wrapped in a creator function, such as:
+These are basic elements that come with the framework. It is wrapped inside a function, e.g.:
 ```swift
 public func ElementOfLabel(props: String) -> ElementOf<Label> {
     return ElementOf<Label>.init(props: props)
 }
 ```
-With them you can get started quickly. These are the complete list of built-in elements:
+With them you can get started building UI quickly. These are the complete list of built-in elements:
 - `ElementOfLabel(props: String)`
 - `ElementOfTextField(props: (text: String?, placeholder: String?))`
 - `ElementOfImageView(props: UIImage)`
@@ -301,10 +300,10 @@ There is only one built-in `Row`:
 ```swift
 func RowOfEmptySpace(height: CGFloat) -> Row
 ```
-This is convenience when you want to add an empty space `Row`.
+This is convenience when you want to add a fixed-height empty space between `Row`s.
 
 ### Customizing Built-in Elements
-These built-in elements are very bland by default (e.g., it's just a default `UILabel()`). You can `styles` them up:
+These built-in elements don't have any stylings on them, e.g., it's just a default `UILabel()`. You can add some `styles`:
 ```swift
 let el = ElementOfLabel(props: "Yay!").styles { lb in
   lb.font = ...

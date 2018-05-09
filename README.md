@@ -28,6 +28,17 @@ Add this to your Podfile:
 pod 'ViewElements'
 ````
 
+## Why?
+Ever make a `UITableViewCell` nib but then want to use it as `UIView`? There's no easy way to do that. You need to do everything all over again in `UIView`, then add it as a subview of `UITableViewCell`. But it's still such a hassle...
+
+Using this framework, you **always create nibs as `UIView` subclass** (or programmatically). Then, you can have an element with: `ElementOf<YourView>(props: YourView.Props)`.
+Wrapping that element with `Row`, you get a table view cell.
+Wrapping that element with `SectionHeader`, you get a section header, etc. 
+No more `UITableViewHeaderFooterView` or `UITableViewCell` nibs, only `UIView`.
+The idea is, making a `UIView` nib/element once, use it anywhere.
+
+In a nutshell, `ViewElements` is a set of models that let you build a table view fast and easily by composing elements.
+
 ## Table of Contents
 - [Installation](#installation)
 - [Overview](#overview)

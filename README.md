@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/ViewElements.svg?style=flat)](http://cocoapods.org/pods/ViewElements)
 [![Platform](https://img.shields.io/cocoapods/p/ViewElements.svg?style=flat)](http://cocoapods.org/pods/ViewElements)
 
-A framework to manage and reuse UIViews in iOS apps.
+Build `UITableView` declaratively by composing elements.
 
 *IMPORTANT: This is still a work in progress. Can be used in production but with care.*
 

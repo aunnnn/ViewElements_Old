@@ -371,8 +371,9 @@ class ImageWithLabelComponent: ComponentOf<(img: UIImage, title: String)> {
 
 ## Known Issues
 These are issues I don't know how to fix yet:
-- Stretchy header with first hanging section header
+- Stretchy header view with first (sticky) section header
   - Because the (first) section header **strickly** respects `tableView.contentInset` to know where it should stick, when the stretchy header shrinks or moves up, it lefts the empty gap between them.
+- Table header view is kinda buggy. After many trials and errors, it doesn't seem to play well with AutoLayout. In practice, you should use the topmost table cell as a table header, as it provides exactly the same funtionality.
 
 ## Limitations
 This framework is (at the moment) suitable for creating static pages, e.g. not much animations/interactions on the content.

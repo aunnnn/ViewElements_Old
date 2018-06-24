@@ -380,11 +380,9 @@ At the end of the day it's just a `UITableView`.
 For highly interactive page with many gestures, consider other options.
 
 ## Roadmap
-1. I'm thinking on combining this with RxSwift, which allows us to use ViewElements on creating data-driven pages (e.g., any kinds of input forms, with reactivity). The idea is to use Rx setup block in propsType, instead of a fixed, stateful variable like String. For example (Reactive<RxLabel>) -> [Disposable]. 
-  
-  **Probably in a separated module. Don't what this to bloat further than this.**
-  
-2. Support UICollectionView. Probably will support only simple horizontal collection view (in a separated library), which is pretty common use-cases.
+1. Make this framework contains only core classes (`Row`, `ElementOf`, etc.). Remove unrelated component like `StretchyHeaderView`. Make the core framework minimal as possible, and trimming down `TableModelViewController.swift`.
+2. Integration with RxSwift in another framework, which allows us to use ViewElements on creating data-driven pages (e.g., any kinds of input forms, with reactivity). One idea is to pass something like `Variable<String>` instead of a concrete type like String. This allows it to be reactive to changes from binding outside, without `tableView.reloadData` every time. Each cell maintains its own `disposedBag`. It could also expose an Rx setup block like `(Reactive<SomeElementUsingRX>) -> [Disposable]`, to allow flexible event bindings.
+3. Support `UICollectionView`. Probably will support single column, vertical/horizontal scrolling out of the box, which is the most common use-case out there. In other cases, `UICollectionViewLayout` subclass can be set as needed.
 
 ## Examples
 See 'ViewElements/Examples'. It's not polished though, more like a playground for myself while developing this framework (sry lol).

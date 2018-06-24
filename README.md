@@ -395,4 +395,5 @@ You could look into these instead, probably more elegant that this framework lol
 - [BrickKit](https://github.com/wayfair/brickkit-ios), super general-purpose, built with collection view, as it should be
 
 ### Then Why ViewElements?
-It's easy to use and understand (I hope). Not much magic. If you know how to use UITableView, then you can get started right away.
+It's easy to use and understand. Not much magic. If you know how to use UITableView, then you can get started right away. 
+In essence, this framework just handles table view's datasource/delegate for you, wrapping up table cell in a viewModel (Element) so that you don't have to do those yourself.

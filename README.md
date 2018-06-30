@@ -139,7 +139,7 @@ Please see the [difference between them](#difference-between-reload-and-tablevie
 1. Wrap an element with `SectionHeader` or `SectionFooter`:
 ```swift
 let sh = SectionHeader(ElementOfLabel(props: "Section header"))
-let sf = SectionHeader(ElementOfLabel(props: "Section footer"))
+let sf = SectionFooter(ElementOfLabel(props: "Section footer"))
 ```
 2. Set it to `Section`:
 ```swift
